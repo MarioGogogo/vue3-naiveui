@@ -1,16 +1,17 @@
 <template>
-  <div class="page-container">
+  <body class="home-body">
     <!-- TopAppBar -->
     <header class="top-app-bar" id="main-header">
       <div class="header-left">
         <button class="menu-button">
-          <span class="icon">☰</span>
+          <span class="material-symbols-outlined">menu</span>
         </button>
         <h1 class="header-title">功能模块</h1>
       </div>
       <div class="header-right">
-        <div class="avatar">
+        <div class="avatar-container">
           <img
+            class="avatar-img"
             src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_DzqdWdhT257cZoqQMSv90qedIfFtoav63AUp8zXcBaQhylhha_csySvVeeeROtNLUnhtEZU1m73lTKFifV1pPz7mUhUS1dms74i8dlPTLl_dAAnJGMPMKszraAQ1Hk913nfH_Hh4RjX_nVyEAe5haZ5b9D0gYboSoNomRlp9PRtJDuvUD_FifbKBM1uMXumtQl3gwM_YTWJfWFF8R7Yt1xub58OmiREm6u0K0AIk-bUDc8ILb1Jnig"
             alt="User Avatar"
           />
@@ -19,21 +20,20 @@
     </header>
 
     <main class="main-content">
-      <!-- Hero Section -->
+      <!-- Hero / Header Section -->
       <section class="hero-section">
         <h2 class="hero-title">模块库</h2>
-        <p class="hero-subtitle">选择一个功能模块开始体验</p>
+        <p class="hero-subtitle">选择一个功能模块开始体验 — 2024 EDITION</p>
       </section>
 
       <!-- Search Bar -->
-      <div class="search-container">
-        <div class="search-bar">
-          <span class="search-icon">🔍</span>
+      <div class="search-section">
+        <div class="search-bar neo-shadow">
+          <span class="material-symbols-outlined search-icon">search</span>
           <input
-            type="text"
             class="search-input"
             placeholder="搜索组件或功能..."
-            v-model="searchValue"
+            type="text"
           />
         </div>
       </div>
@@ -41,42 +41,130 @@
       <!-- 3-Column Grid of Cards -->
       <section class="grid-section">
         <div class="grid-container">
-          <div
-            v-for="module in modules"
-            :key="module.id"
-            class="card"
-            :class="{ 'card-available': module.active }"
-            @click="handleNavigate(module)"
-          >
+          <!-- Card 1: Virtual List (Available) -->
+          <div class="card neo-shadow" @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mouseleave="handleMouseLeave" @click="handleNavigate(modules[0])">
             <div class="card-status">
-              <span class="status-badge" :class="module.active ? 'status-available' : 'status-dev'">
-                {{ module.active ? '可用' : '开发中' }}
-              </span>
+              <span class="status-badge status-available">可用</span>
             </div>
-            <div class="card-icon" :class="{ 'icon-available': module.active }">
-              <span class="icon-emoji">{{ module.icon }}</span>
+            <div class="card-icon">
+              <span class="material-symbols-outlined material-filled">list_alt</span>
             </div>
-            <h3 class="card-title">{{ module.title }}</h3>
-            <p class="card-description">{{ module.shortDesc }}</p>
+            <h3 class="card-title">虚拟列表</h3>
+            <p class="card-description">高性能数据</p>
+          </div>
+
+          <!-- Card 2: Data Table -->
+          <div class="card neo-shadow" @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mouseleave="handleMouseLeave" @click="handleNavigate(modules[1])">
+            <div class="card-status">
+              <span class="status-badge status-dev">开发中</span>
+            </div>
+            <div class="card-icon icon-green">
+              <span class="material-symbols-outlined">table_view</span>
+            </div>
+            <h3 class="card-title">数据表格</h3>
+            <p class="card-description">强大组件</p>
+          </div>
+
+          <!-- Card 3: Form Components -->
+          <div class="card neo-shadow" @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mouseleave="handleMouseLeave" @click="handleNavigate(modules[2])">
+            <div class="card-status">
+              <span class="status-badge status-dev">开发中</span>
+            </div>
+            <div class="card-icon icon-cyan">
+              <span class="material-symbols-outlined">edit_note</span>
+            </div>
+            <h3 class="card-title">表单组件</h3>
+            <p class="card-description">丰富输入</p>
+          </div>
+
+          <!-- Card 4: Charts -->
+          <div class="card neo-shadow" @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mouseleave="handleMouseLeave" @click="handleNavigate(modules[3])">
+            <div class="card-status">
+              <span class="status-badge status-dev">开发中</span>
+            </div>
+            <div class="card-icon icon-purple">
+              <span class="material-symbols-outlined">insights</span>
+            </div>
+            <h3 class="card-title">图表展示</h3>
+            <p class="card-description">可视化</p>
+          </div>
+
+          <!-- Card 5: File Upload -->
+          <div class="card neo-shadow" @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mouseleave="handleMouseLeave" @click="handleNavigate(modules[4])">
+            <div class="card-status">
+              <span class="status-badge status-dev">开发中</span>
+            </div>
+            <div class="card-icon icon-orange">
+              <span class="material-symbols-outlined">cloud_upload</span>
+            </div>
+            <h3 class="card-title">文件上传</h3>
+            <p class="card-description">管理</p>
+          </div>
+
+          <!-- Card 6: Dialogs -->
+          <div class="card neo-shadow" @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mouseleave="handleMouseLeave" @click="handleNavigate(modules[5])">
+            <div class="card-status">
+              <span class="status-badge status-dev">开发中</span>
+            </div>
+            <div class="card-icon icon-yellow">
+              <span class="material-symbols-outlined">layers</span>
+            </div>
+            <h3 class="card-title">对话框</h3>
+            <p class="card-description">弹窗</p>
+          </div>
+
+          <!-- Card 7: Notifications -->
+          <div class="card neo-shadow" @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mouseleave="handleMouseLeave" @click="handleNavigate(modules[6])">
+            <div class="card-status">
+              <span class="status-badge status-dev">开发中</span>
+            </div>
+            <div class="card-icon icon-teal">
+              <span class="material-symbols-outlined">notifications_active</span>
+            </div>
+            <h3 class="card-title">消息通知</h3>
+            <p class="card-description">提示</p>
+          </div>
+
+          <!-- Card 8: Tree Control -->
+          <div class="card neo-shadow" @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mouseleave="handleMouseLeave" @click="handleNavigate(modules[7])">
+            <div class="card-status">
+              <span class="status-badge status-dev">开发中</span>
+            </div>
+            <div class="card-icon icon-red">
+              <span class="material-symbols-outlined">account_tree</span>
+            </div>
+            <h3 class="card-title">树形控件</h3>
+            <p class="card-description">层级</p>
+          </div>
+
+          <!-- Card 9: Tabs -->
+          <div class="card neo-shadow" @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mouseleave="handleMouseLeave" @click="handleNavigate(modules[8])">
+            <div class="card-status">
+              <span class="status-badge status-dev">开发中</span>
+            </div>
+            <div class="card-icon icon-lime">
+              <span class="material-symbols-outlined">tab</span>
+            </div>
+            <h3 class="card-title">标签页</h3>
+            <p class="card-description">步骤</p>
           </div>
         </div>
       </section>
 
       <!-- Promotion Area -->
       <section class="promotion-section">
-        <div class="promotion-card">
-          <div class="promotion-bg">
-            <img
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAkOpck58fhwnJjuhsiG8xl-7QMJsQpidVHGIKJLAU04NUbmZ9bJzIlKtz_L-98CeRmwKAYMeQUhwwwgKl0GLUT7NE6SZyLbYY6xLWJNcyc4j3aZj6ksVamNFuP9bS0tLvhyvaHXRba5OF6kMS33RGYRPE1WfBH1kuyQMdyRKToXbCE8xmvW762YOB45iHOVfi3_ZliCMD0ZxBnzWfeIXQMaARHK1mDxOj57TL0e61ZsSFBltjTg1k1A"
-              alt="Background"
-            />
-          </div>
+        <div class="promotion-card neo-shadow-lg">
+          <img
+            class="promotion-bg"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAkOpck58fhwnJjuhsiG8xl-7QMJsQpidVHGIKJLAU04NUbmZ9bJzIlKtz_L-98CeRmwKAYMeQUhwwwgKl0GLUT7NE6SZyLbYY6xLWJNcyc4j3aZj6ksVamNFuP9bS0tLvhyvaHXRba5OF6kMS33RGYRPE1WfBH1kuyQMdyRKToXbCE8xmvW762YOB45iHOVfi3_ZliCMD0ZxBnzWfeIXQMaARHK1mDxOj57TL0e61ZsSFBltjTg1k1A"
+            alt="Tech Background"
+          />
           <div class="promotion-content">
             <span class="promotion-label">PRO PREVIEW</span>
             <h4 class="promotion-title">探索专业级 UI 框架</h4>
             <p class="promotion-desc">解锁更多高级动画组件</p>
+            <button class="promotion-button neo-shadow">了解更多</button>
           </div>
-          <button class="promotion-button">了解更多</button>
         </div>
       </section>
     </main>
@@ -84,107 +172,43 @@
     <!-- BottomNavBar -->
     <nav class="bottom-nav">
       <a class="nav-item" href="#" @click.prevent>
-        <span class="nav-icon">🏠</span>
+        <span class="material-symbols-outlined nav-icon">home</span>
         <span class="nav-label">Home</span>
       </a>
       <a class="nav-item nav-active" href="#" @click.prevent>
-        <span class="nav-icon">⊞</span>
+        <span class="material-symbols-outlined nav-icon material-filled">grid_view</span>
         <span class="nav-label">Modules</span>
       </a>
       <a class="nav-item" href="#" @click.prevent>
-        <span class="nav-icon">🔍</span>
+        <span class="material-symbols-outlined nav-icon">search</span>
         <span class="nav-label">Search</span>
       </a>
       <a class="nav-item" href="#" @click.prevent>
-        <span class="nav-icon">⚙</span>
+        <span class="material-symbols-outlined nav-icon">settings</span>
         <span class="nav-label">Settings</span>
       </a>
     </nav>
-  </div>
+  </body>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useMessage } from 'naive-ui'
 
 const router = useRouter()
 const message = useMessage()
-const searchValue = ref('')
 
 const modules = [
-  {
-    id: 'virtual-list',
-    title: '虚拟列表',
-    shortDesc: '高性能大数据',
-    icon: '📋',
-    route: '/virtual-list',
-    active: true
-  },
-  {
-    id: 'data-table',
-    title: '数据表格',
-    shortDesc: '强大表格组件',
-    icon: '📊',
-    route: '/data-table',
-    active: false
-  },
-  {
-    id: 'form',
-    title: '表单组件',
-    shortDesc: '丰富输入选项',
-    icon: '📝',
-    route: '/form',
-    active: false
-  },
-  {
-    id: 'chart',
-    title: '图表展示',
-    shortDesc: '数据可视化',
-    icon: '📈',
-    route: '/chart',
-    active: false
-  },
-  {
-    id: 'upload',
-    title: '文件上传',
-    shortDesc: '拖拽文件管理',
-    icon: '☁️',
-    route: '/upload',
-    active: false
-  },
-  {
-    id: 'modal',
-    title: '对话框',
-    shortDesc: '弹窗与抽屉',
-    icon: '▣',
-    route: '/modal',
-    active: false
-  },
-  {
-    id: 'notification',
-    title: '消息通知',
-    shortDesc: '提示与通知',
-    icon: '🔔',
-    route: '/notification',
-    active: false
-  },
-  {
-    id: 'tree',
-    title: '树形控件',
-    shortDesc: '层级数据展示',
-    icon: '🌲',
-    route: '/tree',
-    active: false
-  },
-  {
-    id: 'tabs',
-    title: '标签页',
-    shortDesc: '标签与步骤',
-    icon: '📑',
-    route: '/tabs',
-    active: false
-  }
+  { id: 'virtual-list', title: '虚拟列表', route: '/virtual-list', active: true },
+  { id: 'data-table', title: '数据表格', route: '/data-table', active: false },
+  { id: 'form', title: '表单组件', route: '/form', active: false },
+  { id: 'chart', title: '图表展示', route: '/chart', active: false },
+  { id: 'upload', title: '文件上传', route: '/upload', active: false },
+  { id: 'modal', title: '对话框', route: '/modal', active: false },
+  { id: 'notification', title: '消息通知', route: '/notification', active: false },
+  { id: 'tree', title: '树形控件', route: '/tree', active: false },
+  { id: 'tabs', title: '标签页', route: '/tabs', active: false }
 ]
 
 const handleNavigate = (module) => {
@@ -195,104 +219,91 @@ const handleNavigate = (module) => {
   }
 }
 
-const handleScroll = () => {
-  const header = document.getElementById('main-header')
-  if (window.scrollY > 10) {
-    header.classList.add('header-scrolled')
-  } else {
-    header.classList.remove('header-scrolled')
-  }
+// 新拟态交互效果
+const handleMouseDown = (event) => {
+  const card = event.currentTarget
+  card.style.transform = 'translate(2px, 2px)'
+  card.style.boxShadow = '2px 2px 0px 0px #000000'
 }
 
-onMounted(() => {
-  window.addEventListener('scroll', handleScroll)
-})
+const handleMouseUp = (event) => {
+  const card = event.currentTarget
+  card.style.transform = 'translate(0px, 0px)'
+  card.style.boxShadow = '4px 4px 0px 0px #000000'
+}
 
-onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll)
-})
+const handleMouseLeave = (event) => {
+  const card = event.currentTarget
+  card.style.transform = 'translate(0px, 0px)'
+  card.style.boxShadow = '4px 4px 0px 0px #000000'
+}
 </script>
 
 <style scoped>
-/* Color Variables */
-:root {
-  --primary: #00685f;
-  --primary-container: #008378;
-  --on-primary: #ffffff;
-  --on-primary-container: #f4fffc;
-  --primary-fixed: #89f5e7;
-  --primary-fixed-dim: #6bd8cb;
+/* Material Symbols */
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700;800&family=Manrope:wght@400;600;700;800&display=swap');
 
-  --secondary: #006591;
-  --secondary-container: #39b8fd;
-  --on-secondary: #ffffff;
-  --on-secondary-container: #004666;
-  --secondary-fixed: #c9e6ff;
-  --secondary-fixed-dim: #89ceff;
-
-  --tertiary: #5a5c5d;
-  --tertiary-container: #737576;
-  --on-tertiary: #ffffff;
-  --on-tertiary-container: #fcfcfd;
-
-  --surface: #fbf8fc;
-  --surface-container: #f0edf1;
-  --surface-container-low: #f6f2f7;
-  --surface-container-lowest: #ffffff;
-  --surface-container-high: #eae7eb;
-  --surface-dim: #dcd9dd;
-
-  --background: #fbf8fc;
-  --on-background: #1b1b1e;
-  --on-surface: #1b1b1e;
-  --on-surface-variant: #3d4947;
-  --outline: #6d7a77;
-  --outline-variant: #bcc9c6;
-
-  --error: #ba1a1a;
-  --error-container: #ffdad6;
-  --on-error: #ffffff;
-  --on-error-container: #93000a;
-
-  --tertiary-fixed: #e2e2e3;
-  --tertiary-fixed-dim: #c6c6c7;
-  --inverse-surface: #303033;
-  --inverse-on-surface: #f3f0f4;
-  --inverse-primary: #6bd8cb;
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 700, 'GRAD' 0, 'opsz' 24;
+  font-family: 'Material Symbols Outlined';
 }
 
-* {
+.material-filled {
+  font-variation-settings: 'FILL' 1, 'wght' 700, 'GRAD' 0, 'opsz' 24;
+  font-family: 'Material Symbols Outlined';
+}
+
+/* 基础设置 */
+.home-body {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  background-color: #ffffff;
+  min-height: max(884px, 100dvh);
+  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #000000;
+  overflow-x: hidden;
+  padding-bottom: 128px;
 }
 
-.page-container {
-  min-height: 100vh;
-  background: var(--background);
-  padding-bottom: 80px;
-  overflow-x: hidden;
+/* 新拟态样式 */
+.neo-shadow {
+  box-shadow: 4px 4px 0px 0px #000000;
+}
+
+.neo-shadow-lg {
+  box-shadow: 6px 6px 0px 0px #000000;
+}
+
+.neo-border {
+  border: 3px solid #000000;
+}
+
+.neo-border-sm {
+  border: 2px solid #000000;
+}
+
+/* 隐藏滚动条 */
+.home-body ::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
 }
 
 /* TopAppBar */
 .top-app-bar {
+  width: 100%;
   position: sticky;
   top: 0;
   z-index: 50;
-  width: 100%;
-  background: var(--surface);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  border: 3px solid #000000;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 16px 20px;
-  transition: all 0.3s ease;
-}
-
-.top-app-bar.header-scrolled {
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  background: rgba(251, 248, 252, 0.8);
 }
 
 .header-left {
@@ -307,121 +318,126 @@ onUnmounted(() => {
   justify-content: center;
   width: 40px;
   height: 40px;
-  border-radius: 50%;
-  background: none;
-  border: none;
+  border: 2px solid #000000;
+  background-color: #FFD600;
   cursor: pointer;
-  transition: background 0.2s;
-}
-
-.menu-button:active {
-  opacity: 0.8;
+  transition: transform 0.2s;
 }
 
 .menu-button:hover {
-  background: var(--surface-container-low);
+  transform: translate(2px, 2px);
 }
 
-.menu-button .icon {
-  font-size: 24px;
-  color: var(--primary);
+.menu-button:active {
+  transform: translate(4px, 4px);
+}
+
+.menu-button .material-symbols-outlined {
+  color: #000000;
 }
 
 .header-title {
-  font-family: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 24px;
-  color: var(--primary);
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: 22px;
+  color: #000000;
+  font-weight: 800;
   margin: 0;
+  text-transform: uppercase;
+  letter-spacing: -0.025em;
 }
 
-.avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--primary-container);
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.avatar-container {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #000000;
+  background-color: #ffffff;
   overflow: hidden;
-  border: 1px solid var(--outline-variant);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: transform 0.2s;
 }
 
-.avatar:active {
-  transform: scale(0.9);
+.avatar-container:active {
+  transform: scale(0.95);
 }
 
-.avatar img {
+.avatar-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-/* Main Content */
+/* 主内容区域 */
 .main-content {
   width: 100%;
   max-width: 448px;
   margin: 0 auto;
 }
 
-/* Hero Section */
+/* 英雄区域 */
 .hero-section {
-  background:
-    radial-gradient(circle at top right, rgba(137, 245, 231, 0.27), transparent 70%),
-    radial-gradient(circle at bottom left, rgba(201, 230, 255, 0.27), transparent 70%);
   padding: 24px 20px;
   display: flex;
   flex-direction: column;
   gap: 16px;
+  background-color: rgba(0, 229, 255, 0.2);
+  border: 3px solid #000000;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  margin-bottom: 24px;
 }
 
 .hero-title {
-  font-family: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 32px;
-  letter-spacing: -0.02em;
-  color: var(--on-surface);
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: 32px;
+  line-height: 1;
+  color: #000000;
+  font-weight: 800;
   margin: 0;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
 }
 
 .hero-subtitle {
-  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 14px;
-  line-height: 20px;
-  font-weight: 400;
-  color: var(--on-surface-variant);
-  opacity: 0.8;
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  color: #000000;
+  font-weight: 700;
   margin: 0;
+  text-transform: uppercase;
 }
 
-/* Search Bar */
-.search-container {
+/* 搜索区域 */
+.search-section {
   padding: 0 20px;
   margin-bottom: 24px;
 }
 
 .search-bar {
-  background: var(--surface-container-lowest);
-  border: 1px solid var(--outline-variant);
-  border-radius: 12px;
+  background-color: #ffffff;
+  border: 3px solid #000000;
   display: flex;
   align-items: center;
   padding: 12px 16px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: all 0.2s;
 }
 
 .search-bar:focus-within {
-  box-shadow: 0 4px 12px rgba(0, 104, 95, 0.2);
-  ring: 2px solid rgba(0, 104, 95, 0.2);
+  transform: translate(2px, 2px);
+  box-shadow: none;
 }
 
 .search-icon {
   font-size: 20px;
-  color: var(--on-surface-variant);
+  color: #000000;
   margin-right: 12px;
+  font-weight: 700;
 }
 
 .search-input {
@@ -430,19 +446,21 @@ onUnmounted(() => {
   padding: 0;
   width: 100%;
   font-size: 14px;
-  color: var(--on-surface);
-  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #000000;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
 .search-input::placeholder {
-  color: var(--outline);
+  color: rgba(0, 0, 0, 0.4);
 }
 
 .search-input:focus {
   outline: none;
 }
 
-/* Grid Section */
+/* 九宫格区域 */
 .grid-section {
   padding: 0 20px;
   margin-bottom: 24px;
@@ -455,112 +473,132 @@ onUnmounted(() => {
 }
 
 .card {
-  background: var(--surface-container-lowest);
-  border-radius: 12px;
+  background-color: #ffffff;
+  border: 3px solid #000000;
   padding: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  border: 1px solid var(--outline-variant);
-  cursor: pointer;
   transition: all 0.2s;
   position: relative;
+  cursor: pointer;
 }
 
-.card:active {
-  transform: scale(0.95);
-}
-
-.card-available {
-  border-color: var(--primary);
-}
-
-.card-available:hover {
-  border-color: var(--primary);
-  box-shadow: 0 4px 12px rgba(0, 104, 95, 0.15);
-}
-
-.card:not(.card-available):hover {
-  border-color: var(--secondary);
+.card:hover {
+  transform: translate(2px, 2px);
+  box-shadow: none;
 }
 
 .card-status {
   position: absolute;
-  top: 0;
-  right: 0;
-  padding: 4px;
+  top: -8px;
+  right: -8px;
+  z-index: 10;
 }
 
 .status-badge {
-  padding: 2px 6px;
-  border-radius: 9999px;
+  padding: 2px 8px;
+  border: 2px solid #000000;
   font-size: 10px;
   font-weight: 700;
-  line-height: 12px;
-  letter-spacing: 0.08em;
-  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  text-transform: uppercase;
 }
 
 .status-available {
-  background: rgba(0, 104, 95, 0.1);
-  color: var(--primary);
+  background-color: #FFD600;
+  color: #000000;
 }
 
 .status-dev {
-  background: rgba(198, 198, 199, 0.4);
-  color: var(--on-surface-variant);
+  background-color: #000000;
+  color: #ffffff;
 }
 
 .card-icon {
   width: 48px;
   height: 48px;
-  border-radius: 12px;
-  background: rgba(0, 101, 145, 0.1);
+  border: 2px solid #000000;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 12px;
+  margin-top: 8px;
   margin-bottom: 8px;
-  transition: transform 0.2s;
 }
 
-.card:hover .card-icon {
-  transform: scale(1.1);
+.card-icon .material-symbols-outlined {
+  font-size: 28px;
 }
 
-.icon-available {
-  background: rgba(0, 104, 95, 0.1);
+/* 不同卡片的图标颜色 */
+.card:nth-child(1) .card-icon {
+  background-color: #FF00FF;
+  color: #000000;
 }
 
-.icon-emoji {
-  font-size: 24px;
+.card:nth-child(2) .card-icon {
+  background-color: #39FF14;
+  color: #000000;
+}
+
+.card:nth-child(3) .card-icon {
+  background-color: #00FFFF;
+  color: #000000;
+}
+
+.card:nth-child(4) .card-icon {
+  background-color: #BF00FF;
+  color: #ffffff;
+}
+
+.card:nth-child(5) .card-icon {
+  background-color: #FF5F1F;
+  color: #000000;
+}
+
+.card:nth-child(6) .card-icon {
+  background-color: #FFF01F;
+  color: #000000;
+}
+
+.card:nth-child(7) .card-icon {
+  background-color: #00CCCC;
+  color: #000000;
+}
+
+.card:nth-child(8) .card-icon {
+  background-color: #FF3131;
+  color: #ffffff;
+}
+
+.card:nth-child(9) .card-icon {
+  background-color: #CCFF00;
+  color: #000000;
 }
 
 .card-title {
-  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: 'Manrope', sans-serif;
   font-size: 12px;
-  font-weight: 600;
-  line-height: 16px;
-  letter-spacing: 0.05em;
-  color: var(--on-surface);
+  font-weight: 700;
+  color: #000000;
   margin: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 100%;
+  text-transform: uppercase;
+  letter-spacing: -0.025em;
 }
 
 .card-description {
-  font-size: 10px;
-  color: var(--on-surface-variant);
-  margin-top: 4px;
+  font-size: 9px;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.6);
+  margin: 4px 0 0 0;
   line-height: 1.2;
-  opacity: 0.7;
 }
 
-/* Promotion Section */
+/* 促销区域 */
 .promotion-section {
   padding: 0 20px;
   margin-bottom: 24px;
@@ -569,143 +607,138 @@ onUnmounted(() => {
 .promotion-card {
   position: relative;
   width: 100%;
-  height: 128px;
-  border-radius: 16px;
+  border: 3px solid #000000;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background-color: #000000;
 }
 
 .promotion-bg {
   position: absolute;
   inset: 0;
-  background: var(--primary-container);
-}
-
-.promotion-bg img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  opacity: 0.5;
+  filter: grayscale(1) contrast(1.25);
 }
 
 .promotion-content {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to right, rgba(0, 30, 29, 0.8), transparent);
-  padding: 16px;
+  position: relative;
+  padding: 24px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: flex-start;
+  gap: 8px;
 }
 
 .promotion-label {
-  color: rgba(255, 255, 255, 0.6);
-  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: #FFD600;
+  padding: 2px 8px;
+  border: 2px solid #000000;
   font-size: 10px;
-  font-weight: 700;
-  line-height: 12px;
-  letter-spacing: 0.08em;
-  margin-bottom: 4px;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: #000000;
 }
 
 .promotion-title {
-  color: white;
-  font-family: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 18px;
-  font-weight: 600;
-  line-height: 24px;
+  color: #ffffff;
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: 24px;
+  line-height: 1;
+  font-weight: 900;
   margin: 0;
-  line-height: 1.2;
+  text-transform: uppercase;
+  font-style: italic;
+  letter-spacing: -0.05em;
 }
 
 .promotion-desc {
-  color: rgba(255, 255, 255, 0.8);
-  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 12px;
-  margin-top: 4px;
+  color: #ffffff;
+  font-family: 'Manrope', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
 .promotion-button {
-  position: absolute;
-  bottom: 16px;
-  right: 16px;
-  background: white;
-  color: var(--primary);
-  border: none;
-  padding: 4px 12px;
-  border-radius: 9999px;
-  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  margin-top: 16px;
+  background-color: #FF5722;
+  color: #ffffff;
+  padding: 8px 24px;
+  border: 2px solid #000000;
+  font-family: 'Manrope', sans-serif;
   font-size: 12px;
-  font-weight: 600;
-  line-height: 16px;
-  letter-spacing: 0.05em;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-weight: 900;
+  text-transform: uppercase;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: all 0.2s;
 }
 
 .promotion-button:active {
-  transform: scale(0.9);
+  transform: translate(2px, 2px);
+  box-shadow: none;
 }
 
-/* BottomNavBar */
+/* 底部导航栏 */
 .bottom-nav {
   position: fixed;
   bottom: 0;
   width: 100%;
   z-index: 50;
-  background: var(--surface);
-  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.04);
+  background-color: #ffffff;
+  border: 3px solid #000000;
+  border-bottom: 0;
+  border-left: 0;
+  border-right: 0;
   display: flex;
   justify-content: space-around;
-  align-items: center;
-  padding: 8px 16px;
+  align-items: stretch;
+  height: 80px;
 }
 
 .nav-item {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: var(--on-surface-variant);
+  color: #000000;
   text-decoration: none;
-  transition: color 0.2s, transform 0.2s;
+  border-right: 2px solid #000000;
   cursor: pointer;
-  padding: 4px 8px;
+  transition: background 0.2s;
+  padding: 8px 0;
+}
+
+.nav-item:last-child {
+  border-right: none;
 }
 
 .nav-item:hover {
-  color: var(--primary);
+  background-color: #00E5FF;
 }
 
-.nav-item:active {
-  transform: scale(0.9);
-}
-
-.nav-active {
-  background: var(--secondary-container);
-  color: var(--on-secondary-container);
-  border-radius: 12px;
-  padding: 4px 16px;
+.nav-item.nav-active {
+  background-color: #FFD600;
 }
 
 .nav-icon {
   font-size: 20px;
-  margin-bottom: 4px;
+  font-weight: 700;
 }
 
 .nav-label {
-  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 16px;
-  letter-spacing: 0.05em;
-}
-
-.nav-active .nav-label {
+  font-family: 'Manrope', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
   margin-top: 4px;
+  text-transform: uppercase;
 }
 
-/* Small screen optimization */
+/* 小屏幕优化 */
 @media (max-width: 360px) {
   .grid-container {
     gap: 8px;
@@ -720,8 +753,8 @@ onUnmounted(() => {
     height: 40px;
   }
 
-  .icon-emoji {
-    font-size: 20px;
+  .card-icon .material-symbols-outlined {
+    font-size: 24px;
   }
 
   .card-title {
@@ -729,7 +762,7 @@ onUnmounted(() => {
   }
 
   .card-description {
-    font-size: 9px;
+    font-size: 8px;
   }
 }
 </style>

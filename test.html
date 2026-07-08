@@ -1,44 +1,50 @@
 <!DOCTYPE html>
-
 <html class="light" lang="zh-CN">
 
 <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>功能模块 - Functional Modules</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <!-- Fonts -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700&amp;family=Manrope:wght@400;600;700&amp;display=swap"
-        rel="stylesheet" />
+        href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700;800&amp;family=Manrope:wght@400;600;700;800&amp;display=swap"
+        rel="stylesheet">
     <!-- Material Symbols -->
     <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-        rel="stylesheet" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-        rel="stylesheet" />
+        rel="stylesheet">
     <style>
         .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-variation-settings: 'FILL' 0, 'wght' 700, 'GRAD' 0, 'opsz' 24;
         }
 
-        .glass-card {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+        .neo-shadow {
+            box-shadow: 4px 4px 0px 0px #000000;
         }
 
-        .hero-gradient {
-            background: radial-gradient(circle at top right, #89f5e744, transparent 70%),
-                radial-gradient(circle at bottom left, #c9e6ff44, transparent 70%);
+        .neo-shadow-lg {
+            box-shadow: 6px 6px 0px 0px #000000;
+        }
+
+        .neo-border {
+            border: 3px solid #000000;
+        }
+
+        .neo-border-sm {
+            border: 2px solid #000000;
         }
 
         /* Custom scrollbar for seamless look */
         ::-webkit-scrollbar {
             width: 0px;
             background: transparent;
+        }
+
+        body {
+            background-color: #ffffff;
+            min-height: max(884px, 100dvh);
         }
     </style>
     <script id="tailwind-config">
@@ -47,58 +53,18 @@
             theme: {
                 extend: {
                     "colors": {
-                        "on-background": "#1b1b1e",
-                        "tertiary-fixed-dim": "#c6c6c7",
-                        "secondary-fixed-dim": "#89ceff",
-                        "inverse-surface": "#303033",
-                        "error-container": "#ffdad6",
-                        "inverse-primary": "#6bd8cb",
-                        "surface-variant": "#e4e1e6",
-                        "on-primary-fixed-variant": "#005049",
-                        "secondary-fixed": "#c9e6ff",
-                        "surface-container-high": "#eae7eb",
-                        "on-primary": "#ffffff",
-                        "on-secondary": "#ffffff",
-                        "surface-bright": "#fbf8fc",
-                        "primary-fixed-dim": "#6bd8cb",
-                        "inverse-on-surface": "#f3f0f4",
-                        "secondary-container": "#39b8fd",
-                        "tertiary-container": "#737576",
-                        "on-secondary-container": "#004666",
-                        "on-error-container": "#93000a",
-                        "tertiary": "#5a5c5d",
-                        "on-surface-variant": "#3d4947",
-                        "surface": "#fbf8fc",
-                        "outline-variant": "#bcc9c6",
-                        "primary-container": "#008378",
-                        "on-primary-container": "#f4fffc",
-                        "on-secondary-fixed": "#001e2f",
-                        "on-tertiary-fixed-variant": "#454748",
-                        "surface-container-highest": "#e4e1e6",
-                        "surface-dim": "#dcd9dd",
-                        "on-tertiary-container": "#fcfcfd",
-                        "on-tertiary-fixed": "#1a1c1d",
-                        "surface-tint": "#006a61",
-                        "surface-container-low": "#f6f2f7",
-                        "outline": "#6d7a77",
-                        "on-tertiary": "#ffffff",
-                        "on-surface": "#1b1b1e",
-                        "on-error": "#ffffff",
-                        "primary": "#00685f",
-                        "tertiary-fixed": "#e2e2e3",
-                        "primary-fixed": "#89f5e7",
-                        "background": "#fbf8fc",
-                        "error": "#ba1a1a",
-                        "on-secondary-fixed-variant": "#004c6e",
-                        "secondary": "#006591",
-                        "surface-container": "#f0edf1",
-                        "surface-container-lowest": "#ffffff",
-                        "on-primary-fixed": "#00201d"
+                        "primary": "#FFD600",
+                        "secondary": "#FF5722",
+                        "accent": "#00E5FF",
+                        "on-background": "#000000",
+                        "background": "#ffffff",
+                        "surface": "#ffffff",
+                        "outline": "#000000"
                     },
                     "borderRadius": {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
                         "full": "9999px"
                     },
                     "spacing": {
@@ -117,17 +83,6 @@
                         "label-lg": ["Manrope"],
                         "headline-sm": ["Hanken Grotesk"],
                         "body-lg": ["Manrope"]
-                    },
-                    "fontSize": {
-                        "headline-md": ["22px", { "lineHeight": "28px", "fontWeight": "600" }],
-                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
-                        "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
-                        "label-sm": ["10px", { "lineHeight": "12px", "letterSpacing": "0.08em", "fontWeight": "700" }],
-                        "label-lg": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
-                        "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
-                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
-                        "headline-sm-mobile": ["20px", { "lineHeight": "24px", "fontWeight": "600" }],
-                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "700" }]
                     }
                 },
             },
@@ -136,41 +91,42 @@
 </head>
 
 <body
-    class="bg-background font-body-md text-on-background selection:bg-primary-fixed selection:text-on-primary-fixed overflow-x-hidden pb-24">
+    class="bg-background font-body-md text-on-background selection:bg-primary selection:text-black overflow-x-hidden pb-32">
     <!-- TopAppBar -->
     <header
-        class="w-full sticky top-0 z-50 shadow-sm bg-surface flex items-center justify-between px-margin py-stack-md transition-all"
+        class="w-full sticky top-0 z-50 bg-white neo-border border-t-0 border-x-0 flex items-center justify-between px-margin py-stack-md"
         id="main-header">
         <div class="flex items-center gap-3">
             <button
-                class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-surface-container-low transition-colors active:opacity-80">
-                <span class="material-symbols-outlined text-primary" data-icon="menu">menu</span>
+                class="flex items-center justify-center w-10 h-10 neo-border-sm bg-primary hover:translate-x-[2px] hover:translate-y-[2px] transition-transform active:translate-x-[4px] active:translate-y-[4px]">
+                <span class="material-symbols-outlined text-black" data-icon="menu">menu</span>
             </button>
-            <h1 class="font-headline-sm text-headline-sm-mobile text-primary font-bold">功能模块</h1>
+            <h1 class="font-headline-sm text-[22px] text-black font-extrabold uppercase tracking-tight">功能模块</h1>
         </div>
         <div class="flex items-center">
             <div
-                class="w-9 h-9 rounded-full bg-primary-container flex items-center justify-center overflow-hidden border border-outline-variant shadow-sm transition-transform active:scale-90 cursor-pointer">
-                <img class="w-full h-full object-cover"
-                    data-alt="A clean, professional portrait of a tech-savvy user in a bright, modern studio. The lighting is soft and high-key, emphasizing a friendly yet professional demeanor. The color palette features whites and soft cyans to match the app's clean and vibrant aesthetic. High clarity and minimalist composition."
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_DzqdWdhT257cZoqQMSv90qedIfFtoav63AUp8zXcBaQhylhha_csySvVeeeROtNLUnhtEZU1m73lTKFifV1pPz7mUhUS1dms74i8dlPTLl_dAAnJGMPMKszraAQ1Hk913nfH_Hh4RjX_nVyEAe5haZ5b9D0gYboSoNomRlp9PRtJDuvUD_FifbKBM1uMXumtQl3gwM_YTWJfWFF8R7Yt1xub58OmiREm6u0K0AIk-bUDc8ILb1Jnig" />
+                class="w-10 h-10 neo-border-sm bg-white overflow-hidden shadow-sm transition-transform active:scale-95 cursor-pointer">
+                <img class="w-full h-full object-cover" data-alt="User avatar"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_DzqdWdhT257cZoqQMSv90qedIfFtoav63AUp8zXcBaQhylhha_csySvVeeeROtNLUnhtEZU1m73lTKFifV1pPz7mUhUS1dms74i8dlPTLl_dAAnJGMPMKszraAQ1Hk913nfH_Hh4RjX_nVyEAe5haZ5b9D0gYboSoNomRlp9PRtJDuvUD_FifbKBM1uMXumtQl3gwM_YTWJfWFF8R7Yt1xub58OmiREm6u0K0AIk-bUDc8ILb1Jnig">
             </div>
         </div>
     </header>
     <main class="w-full max-w-lg mx-auto">
         <!-- Hero / Header Section -->
-        <section class="hero-gradient px-margin py-stack-lg flex flex-col gap-base">
-            <h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">模块库</h2>
-            <p class="font-body-md text-on-surface-variant opacity-80">选择一个功能模块开始体验</p>
+        <section
+            class="px-margin py-stack-lg flex flex-col gap-base bg-accent/20 neo-border border-t-0 border-x-0 mb-stack-lg">
+            <h2 class="font-headline-lg text-[32px] leading-none text-black font-extrabold uppercase tracking-tighter">
+                模块库</h2>
+            <p class="font-body-md text-black font-bold uppercase text-[12px]">选择一个功能模块开始体验 — 2024 EDITION</p>
         </section>
-        <!-- Search Bar Micro-interaction -->
+        <!-- Search Bar -->
         <div class="px-margin mb-stack-lg">
             <div
-                class="bg-surface-container-lowest border border-outline-variant rounded-xl flex items-center px-4 py-3 shadow-sm hover:shadow-md transition-all focus-within:ring-2 focus-within:ring-primary/20">
-                <span class="material-symbols-outlined text-on-surface-variant mr-3" data-icon="search">search</span>
+                class="bg-white neo-border neo-shadow flex items-center px-4 py-3 group focus-within:translate-x-[2px] focus-within:translate-y-[2px] focus-within:shadow-none transition-all">
+                <span class="material-symbols-outlined text-black mr-3 font-bold" data-icon="search">search</span>
                 <input
-                    class="bg-transparent border-none p-0 focus:ring-0 w-full text-body-md text-on-surface placeholder:text-outline"
-                    placeholder="搜索组件或功能..." type="text" />
+                    class="bg-transparent border-none p-0 focus:ring-0 w-full text-body-md font-bold text-black placeholder:text-black/40 uppercase"
+                    placeholder="搜索组件或功能..." type="text">
             </div>
         </div>
         <!-- 3-Column Grid of Cards -->
@@ -178,151 +134,142 @@
             <div class="grid grid-cols-3 gap-gutter">
                 <!-- Card 1: Virtual List (Available) -->
                 <div
-                    class="bg-surface-container-lowest rounded-xl p-3 flex flex-col items-center text-center shadow-sm border border-outline-variant hover:border-primary transition-all active:scale-95 cursor-pointer relative group overflow-hidden">
-                    <div class="absolute top-0 right-0 p-1">
-                        <span
-                            class="px-1.5 py-0.5 rounded-full bg-primary/10 text-primary font-label-sm text-label-sm">可用</span>
+                    class="bg-white neo-border neo-shadow p-3 flex flex-col items-center text-center hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all cursor-pointer relative group">
+                    <div class="absolute -top-2 -right-2 z-10">
+                        <span class="px-2 py-0.5 bg-primary neo-border-sm font-bold text-[10px] uppercase">可用</span>
                     </div>
                     <div
-                        class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-stack-sm mt-3 group-hover:scale-110 transition-transform">
-                        <span class="material-symbols-outlined" data-icon="list_alt"
-                            style="font-variation-settings: 'FILL' 1;">list_alt</span>
-                    </div>
-                    <h3 class="font-label-lg text-label-lg text-on-surface line-clamp-1">虚拟列表</h3>
-                    <p class="text-[10px] text-on-surface-variant mt-1 leading-tight opacity-70">高性能大数据</p>
+                        class="w-12 h-12 neo-border-sm bg-[#FF00FF] flex items-center justify-center text-black mb-stack-sm mt-2">
+                        <span class="material-symbols-outlined text-[28px]" data-icon="list_alt"
+                            style="font-variation-settings: 'FILL' 1;">list_alt</span></div>
+                    <h3 class="font-bold text-[12px] text-black line-clamp-1 uppercase tracking-tight">虚拟列表</h3>
+                    <p class="text-[9px] font-bold text-black/60 mt-1 leading-tight">高性能数据</p>
                 </div>
                 <!-- Card 2: Data Table -->
                 <div
-                    class="bg-surface-container-lowest rounded-xl p-3 flex flex-col items-center text-center shadow-sm border border-outline-variant hover:border-secondary transition-all active:scale-95 cursor-pointer relative group">
-                    <div class="absolute top-0 right-0 p-1">
+                    class="bg-white neo-border neo-shadow p-3 flex flex-col items-center text-center hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all cursor-pointer relative group">
+                    <div class="absolute -top-2 -right-2 z-10">
                         <span
-                            class="px-1.5 py-0.5 rounded-full bg-tertiary-fixed/40 text-on-surface-variant font-label-sm text-label-sm">开发中</span>
+                            class="px-2 py-0.5 bg-black text-white neo-border-sm font-bold text-[10px] uppercase">开发中</span>
                     </div>
                     <div
-                        class="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary mb-stack-sm mt-3 group-hover:scale-110 transition-transform">
-                        <span class="material-symbols-outlined" data-icon="table_view">table_view</span>
+                        class="w-12 h-12 neo-border-sm bg-[#39FF14] flex items-center justify-center text-black mb-stack-sm mt-2">
+                        <span class="material-symbols-outlined text-[28px]" data-icon="table_view">table_view</span>
                     </div>
-                    <h3 class="font-label-lg text-label-lg text-on-surface line-clamp-1">数据表格</h3>
-                    <p class="text-[10px] text-on-surface-variant mt-1 leading-tight opacity-70">强大表格组件</p>
+                    <h3 class="font-bold text-[12px] text-black line-clamp-1 uppercase tracking-tight">数据表格</h3>
+                    <p class="text-[9px] font-bold text-black/60 mt-1 leading-tight">强大组件</p>
                 </div>
                 <!-- Card 3: Form Components -->
                 <div
-                    class="bg-surface-container-lowest rounded-xl p-3 flex flex-col items-center text-center shadow-sm border border-outline-variant hover:border-secondary transition-all active:scale-95 cursor-pointer relative group">
-                    <div class="absolute top-0 right-0 p-1">
+                    class="bg-white neo-border neo-shadow p-3 flex flex-col items-center text-center hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all cursor-pointer relative group">
+                    <div class="absolute -top-2 -right-2 z-10">
                         <span
-                            class="px-1.5 py-0.5 rounded-full bg-tertiary-fixed/40 text-on-surface-variant font-label-sm text-label-sm">开发中</span>
+                            class="px-2 py-0.5 bg-black text-white neo-border-sm font-bold text-[10px] uppercase">开发中</span>
                     </div>
                     <div
-                        class="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary mb-stack-sm mt-3 group-hover:scale-110 transition-transform">
-                        <span class="material-symbols-outlined" data-icon="edit_note">edit_note</span>
-                    </div>
-                    <h3 class="font-label-lg text-label-lg text-on-surface line-clamp-1">表单组件</h3>
-                    <p class="text-[10px] text-on-surface-variant mt-1 leading-tight opacity-70">丰富输入选项</p>
+                        class="w-12 h-12 neo-border-sm bg-[#00FFFF] flex items-center justify-center text-black mb-stack-sm mt-2">
+                        <span class="material-symbols-outlined text-[28px]" data-icon="edit_note">edit_note</span></div>
+                    <h3 class="font-bold text-[12px] text-black line-clamp-1 uppercase tracking-tight">表单组件</h3>
+                    <p class="text-[9px] font-bold text-black/60 mt-1 leading-tight">丰富输入</p>
                 </div>
                 <!-- Card 4: Charts -->
                 <div
-                    class="bg-surface-container-lowest rounded-xl p-3 flex flex-col items-center text-center shadow-sm border border-outline-variant hover:border-secondary transition-all active:scale-95 cursor-pointer relative group">
-                    <div class="absolute top-0 right-0 p-1">
+                    class="bg-white neo-border neo-shadow p-3 flex flex-col items-center text-center hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all cursor-pointer relative group">
+                    <div class="absolute -top-2 -right-2 z-10">
                         <span
-                            class="px-1.5 py-0.5 rounded-full bg-tertiary-fixed/40 text-on-surface-variant font-label-sm text-label-sm">开发中</span>
+                            class="px-2 py-0.5 bg-black text-white neo-border-sm font-bold text-[10px] uppercase">开发中</span>
                     </div>
                     <div
-                        class="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary mb-stack-sm mt-3 group-hover:scale-110 transition-transform">
-                        <span class="material-symbols-outlined" data-icon="insights">insights</span>
-                    </div>
-                    <h3 class="font-label-lg text-label-lg text-on-surface line-clamp-1">图表展示</h3>
-                    <p class="text-[10px] text-on-surface-variant mt-1 leading-tight opacity-70">数据可视化</p>
+                        class="w-12 h-12 neo-border-sm bg-[#BF00FF] flex items-center justify-center text-white mb-stack-sm mt-2">
+                        <span class="material-symbols-outlined text-[28px]" data-icon="insights">insights</span></div>
+                    <h3 class="font-bold text-[12px] text-black line-clamp-1 uppercase tracking-tight">图表展示</h3>
+                    <p class="text-[9px] font-bold text-black/60 mt-1 leading-tight">可视化</p>
                 </div>
                 <!-- Card 5: File Upload -->
                 <div
-                    class="bg-surface-container-lowest rounded-xl p-3 flex flex-col items-center text-center shadow-sm border border-outline-variant hover:border-secondary transition-all active:scale-95 cursor-pointer relative group">
-                    <div class="absolute top-0 right-0 p-1">
+                    class="bg-white neo-border neo-shadow p-3 flex flex-col items-center text-center hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all cursor-pointer relative group">
+                    <div class="absolute -top-2 -right-2 z-10">
                         <span
-                            class="px-1.5 py-0.5 rounded-full bg-tertiary-fixed/40 text-on-surface-variant font-label-sm text-label-sm">开发中</span>
+                            class="px-2 py-0.5 bg-black text-white neo-border-sm font-bold text-[10px] uppercase">开发中</span>
                     </div>
                     <div
-                        class="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary mb-stack-sm mt-3 group-hover:scale-110 transition-transform">
-                        <span class="material-symbols-outlined" data-icon="cloud_upload">cloud_upload</span>
+                        class="w-12 h-12 neo-border-sm bg-[#FF5F1F] flex items-center justify-center text-black mb-stack-sm mt-2">
+                        <span class="material-symbols-outlined text-[28px]" data-icon="cloud_upload">cloud_upload</span>
                     </div>
-                    <h3 class="font-label-lg text-label-lg text-on-surface line-clamp-1">文件上传</h3>
-                    <p class="text-[10px] text-on-surface-variant mt-1 leading-tight opacity-70">拖拽文件管理</p>
+                    <h3 class="font-bold text-[12px] text-black line-clamp-1 uppercase tracking-tight">文件上传</h3>
+                    <p class="text-[9px] font-bold text-black/60 mt-1 leading-tight">管理</p>
                 </div>
                 <!-- Card 6: Dialogs -->
                 <div
-                    class="bg-surface-container-lowest rounded-xl p-3 flex flex-col items-center text-center shadow-sm border border-outline-variant hover:border-secondary transition-all active:scale-95 cursor-pointer relative group">
-                    <div class="absolute top-0 right-0 p-1">
+                    class="bg-white neo-border neo-shadow p-3 flex flex-col items-center text-center hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all cursor-pointer relative group">
+                    <div class="absolute -top-2 -right-2 z-10">
                         <span
-                            class="px-1.5 py-0.5 rounded-full bg-tertiary-fixed/40 text-on-surface-variant font-label-sm text-label-sm">开发中</span>
+                            class="px-2 py-0.5 bg-black text-white neo-border-sm font-bold text-[10px] uppercase">开发中</span>
                     </div>
                     <div
-                        class="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary mb-stack-sm mt-3 group-hover:scale-110 transition-transform">
-                        <span class="material-symbols-outlined" data-icon="layers">layers</span>
-                    </div>
-                    <h3 class="font-label-lg text-label-lg text-on-surface line-clamp-1">对话框</h3>
-                    <p class="text-[10px] text-on-surface-variant mt-1 leading-tight opacity-70">弹窗与抽屉</p>
+                        class="w-12 h-12 neo-border-sm bg-[#FFF01F] flex items-center justify-center text-black mb-stack-sm mt-2">
+                        <span class="material-symbols-outlined text-[28px]" data-icon="layers">layers</span></div>
+                    <h3 class="font-bold text-[12px] text-black line-clamp-1 uppercase tracking-tight">对话框</h3>
+                    <p class="text-[9px] font-bold text-black/60 mt-1 leading-tight">弹窗</p>
                 </div>
                 <!-- Card 7: Notifications -->
                 <div
-                    class="bg-surface-container-lowest rounded-xl p-3 flex flex-col items-center text-center shadow-sm border border-outline-variant hover:border-secondary transition-all active:scale-95 cursor-pointer relative group">
-                    <div class="absolute top-0 right-0 p-1">
+                    class="bg-white neo-border neo-shadow p-3 flex flex-col items-center text-center hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all cursor-pointer relative group">
+                    <div class="absolute -top-2 -right-2 z-10">
                         <span
-                            class="px-1.5 py-0.5 rounded-full bg-tertiary-fixed/40 text-on-surface-variant font-label-sm text-label-sm">开发中</span>
+                            class="px-2 py-0.5 bg-black text-white neo-border-sm font-bold text-[10px] uppercase">开发中</span>
                     </div>
                     <div
-                        class="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary mb-stack-sm mt-3 group-hover:scale-110 transition-transform">
-                        <span class="material-symbols-outlined"
-                            data-icon="notifications_active">notifications_active</span>
-                    </div>
-                    <h3 class="font-label-lg text-label-lg text-on-surface line-clamp-1">消息通知</h3>
-                    <p class="text-[10px] text-on-surface-variant mt-1 leading-tight opacity-70">提示与通知</p>
+                        class="w-12 h-12 neo-border-sm bg-[#00CCCC] flex items-center justify-center text-black mb-stack-sm mt-2">
+                        <span class="material-symbols-outlined text-[28px]"
+                            data-icon="notifications_active">notifications_active</span></div>
+                    <h3 class="font-bold text-[12px] text-black line-clamp-1 uppercase tracking-tight">消息通知</h3>
+                    <p class="text-[9px] font-bold text-black/60 mt-1 leading-tight">提示</p>
                 </div>
                 <!-- Card 8: Tree Control -->
-                <div
-                    class="bg-surface-container-lowest rounded-xl p-3 flex flex-col items-center text-center shadow-sm border border-outline-variant hover:border-secondary transition-all active:scale-95 cursor-pointer relative group">
-                    <div class="absolute top-0 right-0 p-1">
+                <div class="bg-white neo-border neo-shadow p-3 flex flex-col items-center text-center hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all cursor-pointer relative group"
+                    style="transform: translate(0px, 0px); box-shadow: rgb(0, 0, 0) 4px 4px 0px 0px;">
+                    <div class="absolute -top-2 -right-2 z-10">
                         <span
-                            class="px-1.5 py-0.5 rounded-full bg-tertiary-fixed/40 text-on-surface-variant font-label-sm text-label-sm">开发中</span>
+                            class="px-2 py-0.5 bg-black text-white neo-border-sm font-bold text-[10px] uppercase">开发中</span>
                     </div>
                     <div
-                        class="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary mb-stack-sm mt-3 group-hover:scale-110 transition-transform">
-                        <span class="material-symbols-outlined" data-icon="account_tree">account_tree</span>
+                        class="w-12 h-12 neo-border-sm bg-[#FF3131] flex items-center justify-center text-white mb-stack-sm mt-2">
+                        <span class="material-symbols-outlined text-[28px]" data-icon="account_tree">account_tree</span>
                     </div>
-                    <h3 class="font-label-lg text-label-lg text-on-surface line-clamp-1">树形控件</h3>
-                    <p class="text-[10px] text-on-surface-variant mt-1 leading-tight opacity-70">层级数据展示</p>
+                    <h3 class="font-bold text-[12px] text-black line-clamp-1 uppercase tracking-tight">树形控件</h3>
+                    <p class="text-[9px] font-bold text-black/60 mt-1 leading-tight">层级</p>
                 </div>
                 <!-- Card 9: Tabs -->
                 <div
-                    class="bg-surface-container-lowest rounded-xl p-3 flex flex-col items-center text-center shadow-sm border border-outline-variant hover:border-secondary transition-all active:scale-95 cursor-pointer relative group">
-                    <div class="absolute top-0 right-0 p-1">
+                    class="bg-white neo-border neo-shadow p-3 flex flex-col items-center text-center hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all cursor-pointer relative group">
+                    <div class="absolute -top-2 -right-2 z-10">
                         <span
-                            class="px-1.5 py-0.5 rounded-full bg-tertiary-fixed/40 text-on-surface-variant font-label-sm text-label-sm">开发中</span>
+                            class="px-2 py-0.5 bg-black text-white neo-border-sm font-bold text-[10px] uppercase">开发中</span>
                     </div>
                     <div
-                        class="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary mb-stack-sm mt-3 group-hover:scale-110 transition-transform">
-                        <span class="material-symbols-outlined" data-icon="tab">tab</span>
-                    </div>
-                    <h3 class="font-label-lg text-label-lg text-on-surface line-clamp-1">标签页</h3>
-                    <p class="text-[10px] text-on-surface-variant mt-1 leading-tight opacity-70">标签与步骤</p>
+                        class="w-12 h-12 neo-border-sm bg-[#CCFF00] flex items-center justify-center text-black mb-stack-sm mt-2">
+                        <span class="material-symbols-outlined text-[28px]" data-icon="tab">tab</span></div>
+                    <h3 class="font-bold text-[12px] text-black line-clamp-1 uppercase tracking-tight">标签页</h3>
+                    <p class="text-[9px] font-bold text-black/60 mt-1 leading-tight">步骤</p>
                 </div>
             </div>
         </section>
-        <!-- Asymmetric Promotion Area -->
+        <!-- Promotion Area -->
         <section class="px-margin mb-stack-lg">
-            <div class="relative w-full h-32 rounded-2xl overflow-hidden shadow-md group">
-                <div class="absolute inset-0 bg-primary-container">
-                    <img class="w-full h-full object-cover"
-                        data-alt="A sophisticated abstract technological background featuring interconnected crystalline nodes and flowing light streams in shades of teal and electric blue. The composition is sleek and professional, with high clarity and deep contrast. It evokes a sense of advanced data processing and cloud infrastructure."
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAkOpck58fhwnJjuhsiG8xl-7QMJsQpidVHGIKJLAU04NUbmZ9bJzIlKtz_L-98CeRmwKAYMeQUhwwwgKl0GLUT7NE6SZyLbYY6xLWJNcyc4j3aZj6ksVamNFuP9bS0tLvhyvaHXRba5OF6kMS33RGYRPE1WfBH1kuyQMdyRKToXbCE8xmvW762YOB45iHOVfi3_ZliCMD0ZxBnzWfeIXQMaARHK1mDxOj57TL0e61ZsSFBltjTg1k1A" />
-                </div>
-                <div
-                    class="absolute inset-0 bg-gradient-to-r from-on-primary-fixed/80 to-transparent p-4 flex flex-col justify-center">
-                    <span class="text-white/60 font-label-sm text-label-sm mb-1">PRO PREVIEW</span>
-                    <h4 class="text-white font-headline-sm text-headline-sm leading-tight">探索专业级 UI 框架</h4>
-                    <p class="text-white/80 font-body-md text-[12px] mt-1">解锁更多高级动画组件</p>
-                </div>
-                <div class="absolute bottom-4 right-4">
+            <div class="relative w-full neo-border neo-shadow-lg overflow-hidden group bg-black">
+                <img class="absolute inset-0 w-full h-full object-cover opacity-50 grayscale contrast-125"
+                    data-alt="Tech background"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAkOpck58fhwnJjuhsiG8xl-7QMJsQpidVHGIKJLAU04NUbmZ9bJzIlKtz_L-98CeRmwKAYMeQUhwwwgKl0GLUT7NE6SZyLbYY6xLWJNcyc4j3aZj6ksVamNFuP9bS0tLvhyvaHXRba5OF6kMS33RGYRPE1WfBH1kuyQMdyRKToXbCE8xmvW762YOB45iHOVfi3_ZliCMD0ZxBnzWfeIXQMaARHK1mDxOj57TL0e61ZsSFBltjTg1k1A">
+                <div class="relative p-6 flex flex-col items-start gap-2">
+                    <span class="bg-primary px-2 py-0.5 font-black text-[10px] neo-border-sm uppercase">PRO
+                        PREVIEW</span>
+                    <h4
+                        class="text-white font-headline-lg text-[24px] leading-tight font-black uppercase italic tracking-tighter">
+                        探索专业级 UI 框架</h4>
+                    <p class="text-white font-bold text-[11px] uppercase tracking-widest">解锁更多高级动画组件</p>
                     <button
-                        class="bg-white text-primary px-3 py-1 rounded-full font-label-lg text-label-lg shadow-lg active:scale-90 transition-transform">
+                        class="mt-4 bg-secondary text-white px-6 py-2 neo-border-sm neo-shadow font-black uppercase text-[12px] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all">
                         了解更多
                     </button>
                 </div>
@@ -331,48 +278,48 @@
     </main>
     <!-- BottomNavBar -->
     <nav
-        class="fixed bottom-0 w-full z-50 bg-surface shadow-[0_-4px_12px_0_rgba(0,0,0,0.04)] flex justify-around items-center px-4 py-2">
-        <a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors scale-95 active:scale-90 transition-transform"
+        class="fixed bottom-0 w-full z-50 bg-white neo-border border-b-0 border-x-0 flex justify-around items-stretch px-0 py-0 h-20">
+        <a class="flex-1 flex flex-col items-center justify-center text-black border-r-2 border-black hover:bg-accent transition-colors"
             href="#">
-            <span class="material-symbols-outlined" data-icon="home">home</span>
-            <span class="font-label-lg text-label-lg mt-1">Home</span>
+            <span class="material-symbols-outlined font-black" data-icon="home">home</span>
+            <span class="font-bold text-[10px] uppercase mt-1">Home</span>
         </a>
-        <a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-xl px-4 py-1 scale-95 active:scale-90 transition-transform"
+        <a class="flex-1 flex flex-col items-center justify-center bg-primary text-black border-r-2 border-black"
             href="#">
-            <span class="material-symbols-outlined" data-icon="grid_view"
+            <span class="material-symbols-outlined font-black" data-icon="grid_view"
                 style="font-variation-settings: 'FILL' 1;">grid_view</span>
-            <span class="font-label-lg text-label-lg">Modules</span>
+            <span class="font-bold text-[10px] uppercase mt-1">Modules</span>
         </a>
-        <a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors scale-95 active:scale-90 transition-transform"
+        <a class="flex-1 flex flex-col items-center justify-center text-black border-r-2 border-black hover:bg-accent transition-colors"
             href="#">
-            <span class="material-symbols-outlined" data-icon="search">search</span>
-            <span class="font-label-lg text-label-lg mt-1">Search</span>
+            <span class="material-symbols-outlined font-black" data-icon="search">search</span>
+            <span class="font-bold text-[10px] uppercase mt-1">Search</span>
         </a>
-        <a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors scale-95 active:scale-90 transition-transform"
+        <a class="flex-1 flex flex-col items-center justify-center text-black hover:bg-accent transition-colors"
             href="#">
-            <span class="material-symbols-outlined" data-icon="settings">settings</span>
-            <span class="font-label-lg text-label-lg mt-1">Settings</span>
+            <span class="material-symbols-outlined font-black" data-icon="settings">settings</span>
+            <span class="font-bold text-[10px] uppercase mt-1">Settings</span>
         </a>
     </nav>
-    <!-- Micro-interaction Scripts -->
     <script>
-        // Subtle header transformation on scroll
-        window.addEventListener('scroll', () => {
-            const header = document.getElementById('main-header');
-            if (window.scrollY > 10) {
-                header.classList.add('backdrop-blur-md', 'bg-surface/80');
-            } else {
-                header.classList.remove('backdrop-blur-md', 'bg-surface/80');
-            }
-        });
-
-        // Add ripple effect or logic to active cards
-        document.querySelectorAll('.active\\:scale-95').forEach(card => {
-            card.addEventListener('click', function () {
-                // Future navigation logic here
+        // Optional: Subtle parallax effect or interactivity for neubrutalism
+        document.querySelectorAll('.neo-shadow').forEach(card => {
+            card.addEventListener('mousedown', () => {
+                card.style.transform = 'translate(2px, 2px)';
+                card.style.boxShadow = '2px 2px 0px 0px #000000';
+            });
+            card.addEventListener('mouseup', () => {
+                card.style.transform = 'translate(0px, 0px)';
+                card.style.boxShadow = '4px 4px 0px 0px #000000';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translate(0px, 0px)';
+                card.style.boxShadow = '4px 4px 0px 0px #000000';
             });
         });
     </script>
+
+
 </body>
 
 </html>
