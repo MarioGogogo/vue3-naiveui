@@ -159,7 +159,7 @@
           </div>
 
           <!-- Card 10: Version Test -->
-          <div class="card neo-shadow" @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mouseleave="handleMouseLeave" @click="handleNavigate(modules[2])">
+          <div class="card neo-shadow" @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mouseleave="handleMouseLeave" @click="handleNavigate(modules[9])">
             <div class="card-status">
               <span class="status-badge status-available">可用</span>
             </div>
@@ -254,22 +254,25 @@ const environment = computed(() => {
 const modules = [
   { id: 'virtual-list', title: '虚拟列表', route: '/virtual-list', active: true },
   { id: 'message-demo', title: '消息演示', route: '/message-demo', active: true },
-  { id: 'version-test', title: '版本测试', route: '/version-test', active: true },
   { id: 'data-table', title: '数据表格', route: '/data-table', active: false },
   { id: 'form', title: '表单组件', route: '/form', active: false },
   { id: 'chart', title: '图表展示', route: '/chart', active: false },
   { id: 'upload', title: '文件上传', route: '/upload', active: false },
   { id: 'modal', title: '对话框', route: '/modal', active: false },
-  { id: 'notification', title: '消息通知', route: '/notification', active: false },
   { id: 'tree', title: '树形控件', route: '/tree', active: false },
-  { id: 'tabs', title: '标签页', route: '/tabs', active: false }
+  { id: 'tabs', title: '标签页', route: '/tabs', active: false },
+  { id: 'version-test', title: '版本测试', route: '/version-test', active: true }
 ]
 
 const handleNavigate = (module) => {
   if (module.active) {
     router.push(module.route)
   } else {
-    message.info(`${module.title} 功能正在开发中...`)
+    // 跳转到「开发中」占位页面，传递模块标题
+    router.push({
+      path: '/coming-soon',
+      query: { title: module.title }
+    })
   }
 }
 
