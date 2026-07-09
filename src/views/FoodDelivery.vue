@@ -12,63 +12,107 @@
       </div>
     </div>
 
-    <!-- 主要内容区域 - 左右布局 -->
-    <div class="main-content">
-      <!-- 左侧分类列表 -->
-      <div class="category-sidebar">
-        <!-- 骨架屏 -->
-        <div v-if="isLoading" class="sidebar-content">
-          <div v-for="i in 5" :key="i" class="category-item-skeleton">
-            <n-skeleton height="40" width="40" :sharp="true" class="category-icon-skeleton" />
-            <n-skeleton height="12" width="40" :sharp="true" />
-          </div>
-        </div>
+    <!-- Tab 导航 -->
+    <div class="tab-navigation">
+      <n-tabs v-model:value="activeTab" type="segment" size="large" animated class="neo-tabs">
+        <!-- 点菜 Tab -->
+        <n-tab-pane name="menu" tab="点菜">
+          <div class="tab-content menu-content">
+            <!-- 主要内容区域 - 左右布局 -->
+            <div class="main-content">
+              <!-- 左侧分类列表 -->
+              <div class="category-sidebar">
+                <!-- 骨架屏 -->
+                <div v-if="isLoading" class="sidebar-content">
+                  <div v-for="i in 5" :key="i" class="category-item-skeleton">
+                    <n-skeleton height="40" width="40" :sharp="true" class="category-icon-skeleton" />
+                    <n-skeleton height="12" width="40" :sharp="true" />
+                  </div>
+                </div>
 
-        <!-- 真实内容 -->
-        <div v-else class="sidebar-content">
-          <div v-for="(category, index) in categories" :key="category.id"
-            :class="['category-item', { active: selectedCategory === category.id }]"
-            @click="selectCategory(category.id)">
-            <div class="category-icon">{{ category.icon }}</div>
-            <div class="category-name">{{ category.name }}</div>
-          </div>
-        </div>
-      </div>
+                <!-- 真实内容 -->
+                <div v-else class="sidebar-content">
+                  <div v-for="(category, index) in categories" :key="category.id"
+                    :class="['category-item', { active: selectedCategory === category.id }]"
+                    @click="selectCategory(category.id)">
+                    <div class="category-icon">{{ category.icon }}</div>
+                    <div class="category-name">{{ category.name }}</div>
+                  </div>
+                </div>
+              </div>
 
-      <!-- 右侧商品列表 -->
-      <div class="product-area">
-        <!-- 骨架屏 -->
-        <div v-if="isLoading" class="product-content">
-          <div v-for="i in 3" :key="i" class="category-section-skeleton">
-            <n-skeleton height="24" width="120" :sharp="true" class="category-title-skeleton" />
-            <div class="product-list-skeleton">
-              <div v-for="j in 3" :key="j" class="product-item-skeleton neo-shadow">
-                <!-- 商品图片占位 -->
-                <n-skeleton height="60" width="60" :sharp="true" class="product-image-skeleton" />
+              <!-- 右侧商品列表 -->
+              <div class="product-area">
+                <!-- 骨架屏 -->
+                <div v-if="isLoading" class="product-content">
+                  <div v-for="i in 3" :key="i" class="category-section-skeleton">
+                    <n-skeleton height="24" width="120" :sharp="true" class="category-title-skeleton" />
+                    <div class="product-list-skeleton">
+                      <div v-for="j in 3" :key="j" class="product-item-skeleton neo-shadow">
+                        <!-- 商品图片占位 -->
+                        <n-skeleton height="60" width="60" :sharp="true" class="product-image-skeleton" />
 
-                <!-- 商品信息占位 -->
-                <div class="product-info-skeleton">
-                  <!-- 商品名称占位 -->
-                  <n-skeleton height="16" width="120" :sharp="true" class="product-name-skeleton" />
-                  <!-- 商品描述占位 -->
-                  <n-skeleton height="12" width="100" :sharp="true" class="product-desc-skeleton" />
-                  <!-- 商品底部区域 -->
-                  <div class="product-footer-skeleton">
-                    <!-- 价格占位 -->
-                    <n-skeleton height="16" width="40" :sharp="true" class="product-price-skeleton" />
-                    <!-- 数量控制器占位 -->
-                    <div class="quantity-controls-skeleton">
-                      <!-- 减号按钮占位 -->
-                      <div class="quantity-btn-wrapper">
-                        <n-skeleton height="28" width="28" :sharp="true" class="quantity-btn-skeleton" />
+                        <!-- 商品信息占位 -->
+                        <div class="product-info-skeleton">
+                          <!-- 商品名称占位 -->
+                          <n-skeleton height="16" width="120" :sharp="true" class="product-name-skeleton" />
+                          <!-- 商品描述占位 -->
+                          <n-skeleton height="12" width="100" :sharp="true" class="product-desc-skeleton" />
+                          <!-- 商品底部区域 -->
+                          <div class="product-footer-skeleton">
+                            <!-- 价格占位 -->
+                            <n-skeleton height="16" width="40" :sharp="true" class="product-price-skeleton" />
+                            <!-- 数量控制器占位 -->
+                            <div class="quantity-controls-skeleton">
+                              <!-- 减号按钮占位 -->
+                              <div class="quantity-btn-wrapper">
+                                <n-skeleton height="28" width="28" :sharp="true" class="quantity-btn-skeleton" />
+                              </div>
+                              <!-- 数量显示占位 -->
+                              <div class="quantity-value-wrapper">
+                                <n-skeleton height="14" width="20" :sharp="true" class="quantity-value-skeleton" />
+                              </div>
+                              <!-- 加号按钮占位 -->
+                              <div class="quantity-btn-wrapper">
+                                <n-skeleton height="28" width="28" :sharp="true" class="quantity-btn-skeleton" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <!-- 数量显示占位 -->
-                      <div class="quantity-value-wrapper">
-                        <n-skeleton height="14" width="20" :sharp="true" class="quantity-value-skeleton" />
-                      </div>
-                      <!-- 加号按钮占位 -->
-                      <div class="quantity-btn-wrapper">
-                        <n-skeleton height="28" width="28" :sharp="true" class="quantity-btn-skeleton" />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 真实内容 -->
+                <div v-else class="product-content" ref="productContent">
+                  <div v-for="category in categories" :key="category.id" :ref="el => setCategoryRef(category.id, el)"
+                    class="category-section">
+                    <h3 class="category-title">{{ category.name }}</h3>
+                    <div class="product-list">
+                      <div v-for="product in category.products" :key="product.id" class="product-item neo-shadow">
+                        <div class="product-image" :style="{ backgroundColor: product.color }">
+                          <span class="product-emoji">{{ product.emoji }}</span>
+                        </div>
+                        <div class="product-info">
+                          <h4 class="product-name">{{ product.name }}</h4>
+                          <p class="product-desc">{{ product.description }}</p>
+                          <div class="product-footer">
+                            <span class="product-price">¥{{ product.price }}</span>
+                            <div class="quantity-controls">
+                              <button v-if="getCartQuantity(product.id) > 0" @click="decreaseQuantity(product)"
+                                class="quantity-btn quantity-btn-minus">
+                                <span class="material-symbols-outlined">remove</span>
+                              </button>
+                              <span v-if="getCartQuantity(product.id) > 0" class="quantity-value">
+                                {{ getCartQuantity(product.id) }}
+                              </span>
+                              <button @click="increaseQuantity(product)" class="quantity-btn quantity-btn-plus">
+                                <span class="material-symbols-outlined">add</span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -76,46 +120,186 @@
               </div>
             </div>
           </div>
-        </div>
+        </n-tab-pane>
 
-        <!-- 真实内容 -->
-        <div v-else class="product-content" ref="productContent">
-          <div v-for="category in categories" :key="category.id" :ref="el => setCategoryRef(category.id, el)"
-            class="category-section">
-            <h3 class="category-title">{{ category.name }}</h3>
-            <div class="product-list">
-              <div v-for="product in category.products" :key="product.id" class="product-item neo-shadow">
-                <div class="product-image" :style="{ backgroundColor: product.color }">
-                  <span class="product-emoji">{{ product.emoji }}</span>
+        <!-- 评价 Tab -->
+        <n-tab-pane name="reviews" tab="评价">
+          <div class="tab-content reviews-content">
+            <div class="reviews-summary">
+              <div class="rating-overview neo-shadow">
+                <div class="rating-score">
+                  <span class="score">4.8</span>
+                  <div class="stars">
+                    <span class="material-symbols-outlined star">star</span>
+                    <span class="material-symbols-outlined star">star</span>
+                    <span class="material-symbols-outlined star">star</span>
+                    <span class="material-symbols-outlined star">star</span>
+                    <span class="material-symbols-outlined star">star_half</span>
+                  </div>
+                  <span class="total-reviews">1,234 条评价</span>
                 </div>
-                <div class="product-info">
-                  <h4 class="product-name">{{ product.name }}</h4>
-                  <p class="product-desc">{{ product.description }}</p>
-                  <div class="product-footer">
-                    <span class="product-price">¥{{ product.price }}</span>
-                    <div class="quantity-controls">
-                      <button v-if="getCartQuantity(product.id) > 0" @click="decreaseQuantity(product)"
-                        class="quantity-btn quantity-btn-minus">
-                        <span class="material-symbols-outlined">remove</span>
-                      </button>
-                      <span v-if="getCartQuantity(product.id) > 0" class="quantity-value">
-                        {{ getCartQuantity(product.id) }}
-                      </span>
-                      <button @click="increaseQuantity(product)" class="quantity-btn quantity-btn-plus">
-                        <span class="material-symbols-outlined">add</span>
-                      </button>
+                <div class="rating-bars">
+                  <div class="rating-bar">
+                    <span class="label">5星</span>
+                    <div class="bar">
+                      <div class="fill" style="width: 80%"></div>
                     </div>
+                    <span class="count">80%</span>
+                  </div>
+                  <div class="rating-bar">
+                    <span class="label">4星</span>
+                    <div class="bar">
+                      <div class="fill" style="width: 15%"></div>
+                    </div>
+                    <span class="count">15%</span>
+                  </div>
+                  <div class="rating-bar">
+                    <span class="label">3星</span>
+                    <div class="bar">
+                      <div class="fill" style="width: 3%"></div>
+                    </div>
+                    <span class="count">3%</span>
+                  </div>
+                  <div class="rating-bar">
+                    <span class="label">2星</span>
+                    <div class="bar">
+                      <div class="fill" style="width: 1%"></div>
+                    </div>
+                    <span class="count">1%</span>
+                  </div>
+                  <div class="rating-bar">
+                    <span class="label">1星</span>
+                    <div class="bar">
+                      <div class="fill" style="width: 1%"></div>
+                    </div>
+                    <span class="count">1%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="reviews-list">
+              <h3 class="section-title">用户评价</h3>
+              <div v-for="review in reviews" :key="review.id" class="review-item neo-shadow">
+                <div class="review-header">
+                  <div class="user-info">
+                    <div class="user-avatar">{{ review.userName.charAt(0) }}</div>
+                    <div class="user-details">
+                      <span class="user-name">{{ review.userName }}</span>
+                      <div class="review-stars">
+                        <span v-for="i in review.rating" :key="i"
+                          class="material-symbols-outlined star-small">star</span>
+                      </div>
+                    </div>
+                  </div>
+                  <span class="review-date">{{ review.date }}</span>
+                </div>
+                <p class="review-text">{{ review.content }}</p>
+                <div v-if="review.images && review.images.length" class="review-images">
+                  <div v-for="(img, idx) in review.images" :key="idx" class="review-image">
+                    {{ img }}
+                  </div>
+                </div>
+                <div v-if="review.reply" class="review-reply">
+                  <span class="reply-label">商家回复：</span>
+                  <span class="reply-text">{{ review.reply }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </n-tab-pane>
+
+        <!-- 商家 Tab -->
+        <n-tab-pane name="merchant" tab="商家">
+          <div class="tab-content merchant-content">
+            <div class="merchant-header neo-shadow">
+              <div class="merchant-avatar">🍜</div>
+              <div class="merchant-basic">
+                <h2 class="merchant-name">美味餐厅</h2>
+                <div class="merchant-rating">
+                  <span class="material-symbols-outlined">star</span>
+                  <span class="score">4.8</span>
+                  <span class="sales">月售 2,345 单</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="merchant-info">
+              <div class="info-section">
+                <h3 class="section-title">商家信息</h3>
+                <div class="info-item">
+                  <span class="material-symbols-outlined info-icon">schedule</span>
+                  <div class="info-content">
+                    <span class="info-label">配送时间</span>
+                    <span class="info-value">30-45 分钟</span>
+                  </div>
+                </div>
+                <div class="info-item">
+                  <span class="material-symbols-outlined info-icon">delivery_dining</span>
+                  <div class="info-content">
+                    <span class="info-label">配送费</span>
+                    <span class="info-value">¥5</span>
+                  </div>
+                </div>
+                <div class="info-item">
+                  <span class="material-symbols-outlined info-icon">restaurant</span>
+                  <div class="info-content">
+                    <span class="info-label">起送价</span>
+                    <span class="info-value">¥20</span>
+                  </div>
+                </div>
+                <div class="info-item">
+                  <span class="material-symbols-outlined info-icon">location_on</span>
+                  <div class="info-content">
+                    <span class="info-label">商家地址</span>
+                    <span class="info-value">北京市朝阳区美食街123号</span>
+                  </div>
+                </div>
+                <div class="info-item">
+                  <span class="material-symbols-outlined info-icon">phone</span>
+                  <div class="info-content">
+                    <span class="info-label">联系电话</span>
+                    <span class="info-value">400-123-4567</span>
+                  </div>
+                </div>
+                <div class="info-item">
+                  <span class="material-symbols-outlined info-icon">schedule</span>
+                  <div class="info-content">
+                    <span class="info-label">营业时间</span>
+                    <span class="info-value">09:00-22:00</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="features-section">
+                <h3 class="section-title">商家服务</h3>
+                <div class="features-list">
+                  <div class="feature-item">
+                    <span class="material-symbols-outlined feature-icon">verified</span>
+                    <span class="feature-text">食品安全认证</span>
+                  </div>
+                  <div class="feature-item">
+                    <span class="material-symbols-outlined feature-icon">workspace_premium</span>
+                    <span class="feature-text">品质保证</span>
+                  </div>
+                  <div class="feature-item">
+                    <span class="material-symbols-outlined feature-icon">bolt</span>
+                    <span class="feature-text">极速配送</span>
+                  </div>
+                  <div class="feature-item">
+                    <span class="material-symbols-outlined feature-icon">support_agent</span>
+                    <span class="feature-text">24小时客服</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </n-tab-pane>
+      </n-tabs>
     </div>
 
-    <!-- 底部结算栏 -->
-    <div class="checkout-bar neo-shadow">
+    <!-- 底部结算栏 - 仅在点菜tab显示 -->
+    <div v-if="activeTab === 'menu'" class="checkout-bar neo-shadow">
       <div class="cart-info" @click="toggleCart">
         <div class="cart-icon-wrapper">
           <span class="material-symbols-outlined">shopping_cart</span>
@@ -224,7 +408,7 @@
 <script setup>
 import { ref, computed, nextTick, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { NModal, NSkeleton, useMessage } from 'naive-ui'
+import { NModal, NSkeleton, NTabs, NTabPane, useMessage } from 'naive-ui'
 
 const router = useRouter()
 const message = useMessage()
@@ -285,6 +469,58 @@ const categories = ref([
 
 // 加载状态
 const isLoading = ref(true)
+
+// 当前激活的Tab
+const activeTab = ref('menu')
+
+// 评价数据
+const reviews = ref([
+  {
+    id: 1,
+    userName: '张三',
+    rating: 5,
+    content: '味道非常棒！牛肉面很劲道，汤底很浓郁，配送也很快，下次还会再点！',
+    date: '2024-01-15',
+    images: ['🍜', '🥢'],
+    reply: '感谢您的支持！我们会继续提供优质的美食和服务。'
+  },
+  {
+    id: 2,
+    userName: '李四',
+    rating: 4,
+    content: '整体不错，菜品新鲜，分量足。就是配送时间稍微长了一点，希望改进。',
+    date: '2024-01-14',
+    images: [],
+    reply: '感谢您的反馈！我们会优化配送流程，提高配送效率。'
+  },
+  {
+    id: 3,
+    userName: '王五',
+    rating: 5,
+    content: '太喜欢这家店的宫保鸡丁了！酸甜适中，鸡肉嫩滑，强烈推荐！',
+    date: '2024-01-13',
+    images: ['🥘', '🍚'],
+    reply: '谢谢您的喜欢！宫保鸡丁是我们店的招牌菜，欢迎下次再点！'
+  },
+  {
+    id: 4,
+    userName: '赵六',
+    rating: 5,
+    content: '环境干净卫生，包装精美，菜品温度保持得很好，五星好评！',
+    date: '2024-01-12',
+    images: [],
+    reply: '感谢您的好评！我们会继续保持高品质的服务。'
+  },
+  {
+    id: 5,
+    userName: '钱七',
+    rating: 4,
+    content: '味道不错，价格合理，就是有时候订单处理时间有点长。',
+    date: '2024-01-11',
+    images: ['🍱'],
+    reply: '感谢您的反馈！我们会加强订单处理效率，提升用户体验。'
+  }
+])
 
 // 购物车数据
 const cart = ref([])
@@ -632,7 +868,7 @@ onMounted(() => {
 }
 
 .product-content {
-  padding: 16px 16px 100px 16px;
+  padding: 16px 16px 50px 16px;
 }
 
 /* 分类区块 */
@@ -1187,6 +1423,432 @@ onMounted(() => {
   color: #000000;
 }
 
+/* Tab 导航样式 */
+.tab-navigation {
+  background-color: #ffffff;
+  border-bottom: 3px solid #000000;
+  padding: 0 16px 8px 16px;
+  position: sticky;
+  top: 72px;
+  z-index: 40;
+}
+
+.neo-tabs {
+  border-bottom: none;
+}
+
+.neo-tabs :deep(.n-tabs-nav) {
+  background-color: #f5f5f5;
+  border: 2px solid #000000;
+  border-radius: 0;
+  padding: 4px 4px 0 4px;
+  margin: 12px 0 0 0;
+}
+
+.neo-tabs :deep(.n-tabs-nav-pad) {
+  gap: 4px;
+}
+
+.neo-tabs :deep(.n-tabs-tab) {
+  border: 2px solid #000000;
+  background-color: #ffffff;
+  color: #000000;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 8px 20px;
+  border-radius: 0;
+  transition: all 0.2s;
+  box-shadow: 2px 2px 0px #000000;
+}
+
+.neo-tabs :deep(.n-tabs-tab:hover) {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px #000000;
+}
+
+.neo-tabs :deep(.n-tabs-tab.n-tabs-tab--active) {
+  background-color: #FF5F1F;
+  color: #ffffff;
+  transform: translate(0, 0);
+  box-shadow: 1px 1px 0px #000000;
+}
+
+.tab-content {
+  padding: 12px 16px 16px 16px;
+  min-height: calc(100vh - 250px);
+  margin-top: 0;
+}
+
+/* 点菜内容区域 */
+.menu-content {
+  padding: 0;
+}
+
+.menu-content .main-content {
+  height: calc(100vh - 250px);
+}
+
+/* 评价内容样式 */
+.reviews-content {
+  background-color: #ffffff;
+}
+
+.reviews-summary {
+  margin-bottom: 24px;
+}
+
+.rating-overview {
+  background-color: #ffffff;
+  border: 3px solid #000000;
+  padding: 24px;
+  display: flex;
+  gap: 32px;
+}
+
+.rating-score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 120px;
+}
+
+.score {
+  font-size: 48px;
+  font-weight: 900;
+  color: #FF5F1F;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.stars {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.star {
+  font-size: 24px;
+  color: #FFD700;
+}
+
+.total-reviews {
+  font-size: 12px;
+  color: #666;
+  font-weight: 600;
+}
+
+.rating-bars {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rating-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rating-bar .label {
+  font-size: 12px;
+  font-weight: 600;
+  min-width: 30px;
+  color: #000000;
+}
+
+.rating-bar .bar {
+  flex: 1;
+  height: 8px;
+  background-color: #f5f5f5;
+  border: 2px solid #000000;
+  position: relative;
+}
+
+.rating-bar .fill {
+  height: 100%;
+  background-color: #FFD700;
+  border-right: 2px solid #000000;
+}
+
+.rating-bar .count {
+  font-size: 12px;
+  font-weight: 700;
+  min-width: 35px;
+  text-align: right;
+  color: #000000;
+}
+
+.section-title {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  margin: 0 0 16px 0;
+  text-transform: uppercase;
+  letter-spacing: -0.025em;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #000000;
+}
+
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.review-item {
+  background-color: #ffffff;
+  border: 2px solid #000000;
+  padding: 16px;
+  transition: all 0.2s;
+}
+
+.review-item:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 6px 6px 0px #000000;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  background-color: #4ECDC4;
+  border: 2px solid #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 16px;
+  color: #000000;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.user-name {
+  font-weight: 700;
+  font-size: 14px;
+  color: #000000;
+}
+
+.review-stars {
+  display: flex;
+  gap: 2px;
+}
+
+.star-small {
+  font-size: 14px;
+  color: #FFD700;
+}
+
+.review-date {
+  font-size: 11px;
+  color: #999;
+  font-weight: 600;
+}
+
+.review-text {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #333;
+  margin: 0 0 12px 0;
+  font-weight: 500;
+}
+
+.review-images {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.review-image {
+  width: 60px;
+  height: 60px;
+  background-color: #f5f5f5;
+  border: 2px solid #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+.review-reply {
+  background-color: #f5f5f5;
+  border: 2px solid #000000;
+  padding: 12px;
+  margin-top: 8px;
+}
+
+.reply-label {
+  font-weight: 700;
+  font-size: 12px;
+  color: #FF5F1F;
+  margin-right: 8px;
+}
+
+.reply-text {
+  font-size: 12px;
+  color: #666;
+  line-height: 1.5;
+}
+
+/* 商家内容样式 */
+.merchant-content {
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.merchant-header {
+  background-color: #ffffff;
+  border: 3px solid #000000;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.merchant-avatar {
+  width: 80px;
+  height: 80px;
+  background-color: #FFF5E6;
+  border: 3px solid #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  flex-shrink: 0;
+}
+
+.merchant-basic {
+  flex: 1;
+}
+
+.merchant-name {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  margin: 0 0 8px 0;
+  color: #000000;
+}
+
+.merchant-rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.merchant-rating .material-symbols-outlined {
+  font-size: 16px;
+  color: #FFD700;
+}
+
+.merchant-rating .score {
+  font-size: 16px;
+  font-weight: 800;
+  color: #000000;
+}
+
+.merchant-rating .sales {
+  font-size: 12px;
+  color: #666;
+  font-weight: 600;
+}
+
+.merchant-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.info-section,
+.features-section {
+  background-color: #ffffff;
+  border: 3px solid #000000;
+  padding: 20px;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+.info-icon {
+  width: 24px;
+  height: 24px;
+  color: #FF5F1F;
+  flex-shrink: 0;
+}
+
+.info-content {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.info-label {
+  font-size: 13px;
+  color: #666;
+  font-weight: 600;
+}
+
+.info-value {
+  font-size: 13px;
+  color: #000000;
+  font-weight: 700;
+}
+
+.features-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  background-color: #f5f5f5;
+  border: 2px solid #000000;
+}
+
+.feature-icon {
+  font-size: 20px;
+  color: #4ECDC4;
+  flex-shrink: 0;
+}
+
+.feature-text {
+  font-size: 12px;
+  color: #000000;
+  font-weight: 700;
+}
+
 /* 响应式设计 */
 @media (max-width: 768px) {
   .neo-header {
@@ -1222,7 +1884,7 @@ onMounted(() => {
   }
 
   .product-content {
-    padding: 12px 12px 50px 12px;
+    padding: 12px 12px 0px 12px;
   }
 
   .product-image {
@@ -1266,6 +1928,106 @@ onMounted(() => {
   .checkout-btn {
     padding: 10px 24px;
     font-size: 13px;
+  }
+
+  /* Tab 移动端样式 */
+  .tab-navigation {
+    padding: 0 12px 6px 12px;
+    top: 68px;
+  }
+
+  .neo-tabs :deep(.n-tabs-tab) {
+    font-size: 12px;
+    padding: 6px 16px;
+  }
+
+  /* 评价移动端样式 */
+  .rating-overview {
+    flex-direction: column;
+    gap: 20px;
+    padding: 16px;
+  }
+
+  .score {
+    font-size: 36px;
+  }
+
+  .star {
+    font-size: 20px;
+  }
+
+  .rating-bar .label {
+    min-width: 25px;
+    font-size: 11px;
+  }
+
+  .rating-bar .count {
+    min-width: 30px;
+    font-size: 11px;
+  }
+
+  .review-item {
+    padding: 12px;
+  }
+
+  .user-avatar {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+
+  .review-images {
+    gap: 6px;
+  }
+
+  .review-image {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+  }
+
+  /* 商家移动端样式 */
+  .merchant-header {
+    flex-direction: column;
+    text-align: center;
+    padding: 16px;
+  }
+
+  .merchant-avatar {
+    width: 60px;
+    height: 60px;
+    font-size: 30px;
+  }
+
+  .merchant-name {
+    font-size: 16px;
+  }
+
+  .merchant-rating {
+    justify-content: center;
+  }
+
+  .info-section,
+  .features-section {
+    padding: 16px;
+  }
+
+  .info-item {
+    padding: 10px 0;
+  }
+
+  .info-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .features-list {
+    grid-template-columns: 1fr;
+  }
+
+  .feature-item {
+    padding: 10px;
   }
 }
 </style>

@@ -99,7 +99,7 @@
             </div>
             <div
               class="card-icon"
-              :style="{ backgroundColor: module.bgColor, color: module.color }"
+              :style="{ backgroundColor: module.bgColor }"
             >
               <span
                 class="material-symbols-outlined"
@@ -203,7 +203,7 @@ const modules = [
     description: '高性能数据',
     route: '/virtual-list',
     active: true,
-    icon: 'list_alt',
+    icon: 'view_list',
     iconFilled: true,
     color: '#FF00FF',
     bgColor: '#FF00FF'
@@ -974,6 +974,7 @@ const handleCheckUpdate = async () => {
 
 .card-icon .material-symbols-outlined {
   font-size: 28px;
+  color: #000000;
 }
 
 .card-title {

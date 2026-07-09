@@ -3,7 +3,7 @@
     <!-- Neo-Brutalism 顶部栏 -->
     <div class="neo-header">
       <button class="neo-back-btn" @click="goBack">
-        <span class="back-icon">←</span>
+        <span class="material-symbols-outlined">arrow_back_ios</span>
         <span class="back-text">返回</span>
       </button>
       <div class="header-info">
@@ -29,7 +29,7 @@
               :style="{ '--accent-color': getAccentColor(index) }"
             >
               <div class="neo-avatar">
-                {{ item.name.charAt(0) }}
+                <span class="material-symbols-outlined avatar-icon material-filled">account_circle</span>
               </div>
               <div class="item-content">
                 <div class="neo-name">{{ item.name }}</div>
@@ -39,9 +39,11 @@
               <div class="item-actions">
                 <n-space size="small">
                   <button class="neo-btn neo-btn-view" @click.stop="handleView(item)">
+                    <span class="material-symbols-outlined">search</span>
                     查看
                   </button>
                   <button class="neo-btn neo-btn-edit" @click.stop="handleEdit(item)">
+                    <span class="material-symbols-outlined">edit_note</span>
                     编辑
                   </button>
                 </n-space>
@@ -55,12 +57,18 @@
     <!-- Neo-Brutalism 底部统计 -->
     <div class="neo-stats-bar">
       <div class="neo-stat-box">
-        <span class="neo-stat-label">总数据</span>
-        <span class="neo-stat-value">{{ data.length.toLocaleString() }}</span>
+        <span class="material-symbols-outlined stat-icon">database</span>
+        <div class="stat-content">
+          <span class="neo-stat-label">总数据</span>
+          <span class="neo-stat-value">{{ data.length.toLocaleString() }}</span>
+        </div>
       </div>
       <div class="neo-stat-box">
-        <span class="neo-stat-label">已加载</span>
-        <span class="neo-stat-value">{{ data.length.toLocaleString() }}</span>
+        <span class="material-symbols-outlined stat-icon">done_all</span>
+        <div class="stat-content">
+          <span class="neo-stat-label">已加载</span>
+          <span class="neo-stat-value">{{ data.length.toLocaleString() }}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -168,6 +176,18 @@ onMounted(() => {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+
+:deep(.material-symbols-outlined) {
+  font-variation-settings: 'FILL' 0, 'wght' 700, 'GRAD' 0, 'opsz' 24;
+  font-family: 'Material Symbols Outlined';
+}
+
+:deep(.material-filled) {
+  font-variation-settings: 'FILL' 1, 'wght' 700, 'GRAD' 0, 'opsz' 24;
+  font-family: 'Material Symbols Outlined';
+}
+
 .virtual-list-container {
   min-height: 100vh;
   background: #FFFFF0;
@@ -215,7 +235,7 @@ onMounted(() => {
   box-shadow: 0px 0px 0px #000;
 }
 
-.back-icon {
+.neo-back-btn .material-symbols-outlined {
   font-size: 20px;
   font-weight: 900;
 }
@@ -289,10 +309,13 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 900;
-  font-size: 24px;
   flex-shrink: 0;
   box-shadow: 3px 3px 0px #000;
+}
+
+.avatar-icon {
+  font-size: 28px;
+  font-weight: 900;
 }
 
 .item-content {
@@ -341,6 +364,13 @@ onMounted(() => {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   box-shadow: 3px 3px 0px #000;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.neo-btn .material-symbols-outlined {
+  font-size: 14px;
 }
 
 .neo-btn:hover {
@@ -379,13 +409,24 @@ onMounted(() => {
 
 .neo-stat-box {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 12px;
   padding: 12px 20px;
   background: #FFF;
   border: 3px solid #000;
   box-shadow: 4px 4px 0px #000;
+}
+
+.stat-icon {
+  font-size: 28px;
+  font-weight: 900;
+  color: #000;
+}
+
+.stat-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .neo-stat-label {
