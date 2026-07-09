@@ -5,6 +5,9 @@ import MessageDemo from '../views/MessageDemo.vue'
 import MessageTest from '../views/MessageTest.vue'
 import VersionTest from '../views/VersionTest.vue'
 import ComingSoon from '../views/ComingSoon.vue'
+import TreeView from '../views/TreeView.vue'
+import FormView from '../views/FormView.vue'
+import FoodDelivery from '../views/FoodDelivery.vue'
 
 const routes = [
   {
@@ -36,6 +39,21 @@ const routes = [
     path: '/coming-soon',
     name: 'ComingSoon',
     component: ComingSoon
+  },
+  {
+    path: '/tree',
+    name: 'TreeView',
+    component: TreeView
+  },
+  {
+    path: '/form',
+    name: 'FormView',
+    component: FormView
+  },
+  {
+    path: '/food-delivery',
+    name: 'FoodDelivery',
+    component: FoodDelivery
   }
 ]
 

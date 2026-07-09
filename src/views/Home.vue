@@ -43,131 +43,73 @@
             class="search-input"
             placeholder="搜索组件或功能..."
             type="text"
+            v-model="searchQuery"
+            @input="handleSearch"
           />
+          <button
+            v-if="searchQuery"
+            class="clear-search-btn"
+            @click="clearSearch"
+          >
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+
+        <!-- 搜索结果提示 -->
+        <div v-if="searchQuery" class="search-results-info">
+          <span class="results-text">
+            找到 <strong>{{ filteredModules.length }}</strong> 个结果
+            <span v-if="searchQuery">关于 "<strong>{{ searchQuery }}</strong>"</span>
+          </span>
+          <button v-if="searchQuery" class="clear-text-btn" @click="clearSearch">
+            清空搜索
+          </button>
+        </div>
+
+        <!-- 无搜索结果提示 -->
+        <div v-if="searchQuery && filteredModules.length === 0" class="no-results">
+          <span class="material-symbols-outlined no-results-icon">search_off</span>
+          <p class="no-results-text">没有找到相关功能</p>
+          <p class="no-results-hint">试试其他关键词，如"列表"、"图表"等</p>
         </div>
       </div>
 
       <!-- 3-Column Grid of Cards -->
       <section class="grid-section">
         <div class="grid-container">
-          <!-- Card 1: Virtual List (Available) -->
-          <div class="card neo-shadow" @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mouseleave="handleMouseLeave" @click="handleNavigate(modules[0])">
+          <!-- 使用 v-for 动态渲染卡片 -->
+          <div
+            v-for="(module, index) in filteredModules"
+            :key="module.id"
+            class="card neo-shadow"
+            @mousedown="handleMouseDown"
+            @mouseup="handleMouseUp"
+            @mouseleave="handleMouseLeave"
+            @click="handleNavigate(module)"
+          >
             <div class="card-status">
-              <span class="status-badge status-available">可用</span>
+              <span
+                :class="[
+                  'status-badge',
+                  module.active ? 'status-available' : 'status-dev'
+                ]"
+              >
+                {{ module.active ? '可用' : '开发中' }}
+              </span>
             </div>
-            <div class="card-icon">
-              <span class="material-symbols-outlined material-filled">list_alt</span>
+            <div
+              class="card-icon"
+              :style="{ backgroundColor: module.bgColor, color: module.color }"
+            >
+              <span
+                class="material-symbols-outlined"
+                :class="{ 'material-filled': module.iconFilled }"
+              >
+                {{ module.icon }}
+              </span>
             </div>
-            <h3 class="card-title">虚拟列表</h3>
-            <p class="card-description">高性能数据</p>
-          </div>
-
-          <!-- Card 2: Message Demo -->
-          <div class="card neo-shadow" @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mouseleave="handleMouseLeave" @click="handleNavigate(modules[1])">
-            <div class="card-status">
-              <span class="status-badge status-available">可用</span>
-            </div>
-            <div class="card-icon icon-green">
-              <span class="material-symbols-outlined">notifications_active</span>
-            </div>
-            <h3 class="card-title">消息演示</h3>
-            <p class="card-description">Neo-Brutalism</p>
-          </div>
-
-          <!-- Card 3: Data Table -->
-          <div class="card neo-shadow" @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mouseleave="handleMouseLeave" @click="handleNavigate(modules[2])">
-            <div class="card-status">
-              <span class="status-badge status-dev">开发中</span>
-            </div>
-            <div class="card-icon icon-cyan">
-              <span class="material-symbols-outlined">table_view</span>
-            </div>
-            <h3 class="card-title">数据表格</h3>
-            <p class="card-description">强大组件</p>
-          </div>
-
-          <!-- Card 4: Form Components -->
-          <div class="card neo-shadow" @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mouseleave="handleMouseLeave" @click="handleNavigate(modules[3])">
-            <div class="card-status">
-              <span class="status-badge status-dev">开发中</span>
-            </div>
-            <div class="card-icon icon-purple">
-              <span class="material-symbols-outlined">edit_note</span>
-            </div>
-            <h3 class="card-title">表单组件</h3>
-            <p class="card-description">丰富输入</p>
-          </div>
-
-          <!-- Card 5: Charts -->
-          <div class="card neo-shadow" @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mouseleave="handleMouseLeave" @click="handleNavigate(modules[4])">
-            <div class="card-status">
-              <span class="status-badge status-dev">开发中</span>
-            </div>
-            <div class="card-icon icon-orange">
-              <span class="material-symbols-outlined">insights</span>
-            </div>
-            <h3 class="card-title">图表展示</h3>
-            <p class="card-description">可视化</p>
-          </div>
-
-          <!-- Card 6: File Upload -->
-          <div class="card neo-shadow" @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mouseleave="handleMouseLeave" @click="handleNavigate(modules[5])">
-            <div class="card-status">
-              <span class="status-badge status-dev">开发中</span>
-            </div>
-            <div class="card-icon icon-yellow">
-              <span class="material-symbols-outlined">cloud_upload</span>
-            </div>
-            <h3 class="card-title">文件上传</h3>
-            <p class="card-description">管理</p>
-          </div>
-
-          <!-- Card 7: Dialogs -->
-          <div class="card neo-shadow" @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mouseleave="handleMouseLeave" @click="handleNavigate(modules[6])">
-            <div class="card-status">
-              <span class="status-badge status-dev">开发中</span>
-            </div>
-            <div class="card-icon icon-teal">
-              <span class="material-symbols-outlined">layers</span>
-            </div>
-            <h3 class="card-title">对话框</h3>
-            <p class="card-description">弹窗</p>
-          </div>
-
-          <!-- Card 8: Tree Control -->
-          <div class="card neo-shadow" @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mouseleave="handleMouseLeave" @click="handleNavigate(modules[7])">
-            <div class="card-status">
-              <span class="status-badge status-dev">开发中</span>
-            </div>
-            <div class="card-icon icon-red">
-              <span class="material-symbols-outlined">account_tree</span>
-            </div>
-            <h3 class="card-title">树形控件</h3>
-            <p class="card-description">层级</p>
-          </div>
-
-          <!-- Card 9: Tabs -->
-          <div class="card neo-shadow" @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mouseleave="handleMouseLeave" @click="handleNavigate(modules[8])">
-            <div class="card-status">
-              <span class="status-badge status-dev">开发中</span>
-            </div>
-            <div class="card-icon icon-lime">
-              <span class="material-symbols-outlined">tab</span>
-            </div>
-            <h3 class="card-title">标签页</h3>
-            <p class="card-description">步骤</p>
-          </div>
-
-          <!-- Card 10: Version Test -->
-          <div class="card neo-shadow" @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mouseleave="handleMouseLeave" @click="handleNavigate(modules[9])">
-            <div class="card-status">
-              <span class="status-badge status-available">可用</span>
-            </div>
-            <div class="card-icon icon-pink">
-              <span class="material-symbols-outlined">system_update_alt</span>
-            </div>
-            <h3 class="card-title">版本测试</h3>
-            <p class="card-description">更新检测</p>
+            <h3 class="card-title">{{ module.title }}</h3>
+            <p class="card-description">{{ module.description }}</p>
           </div>
         </div>
       </section>
@@ -232,6 +174,9 @@ const localVersionInfo = ref(null)
 const remoteVersionInfo = ref(null)
 const isCheckingUpdate = ref(false)
 
+// 搜索功能
+const searchQuery = ref('')
+
 // 计算属性
 const currentVersion = computed(() => {
   return localVersionInfo.value?.version || '未知'
@@ -252,17 +197,179 @@ const environment = computed(() => {
 })
 
 const modules = [
-  { id: 'virtual-list', title: '虚拟列表', route: '/virtual-list', active: true },
-  { id: 'message-demo', title: '消息演示', route: '/message-demo', active: true },
-  { id: 'data-table', title: '数据表格', route: '/data-table', active: false },
-  { id: 'form', title: '表单组件', route: '/form', active: false },
-  { id: 'chart', title: '图表展示', route: '/chart', active: false },
-  { id: 'upload', title: '文件上传', route: '/upload', active: false },
-  { id: 'modal', title: '对话框', route: '/modal', active: false },
-  { id: 'tree', title: '树形控件', route: '/tree', active: false },
-  { id: 'tabs', title: '标签页', route: '/tabs', active: false },
-  { id: 'version-test', title: '版本测试', route: '/version-test', active: true }
+  {
+    id: 'virtual-list',
+    title: '虚拟列表',
+    description: '高性能数据',
+    route: '/virtual-list',
+    active: true,
+    icon: 'list_alt',
+    iconFilled: true,
+    color: '#FF00FF',
+    bgColor: '#FF00FF'
+  },
+  {
+    id: 'message-demo',
+    title: '消息演示',
+    description: 'Neo-Brutalism',
+    route: '/message-demo',
+    active: true,
+    icon: 'notifications_active',
+    iconFilled: false,
+    color: '#000000',
+    bgColor: '#39FF14'
+  },
+  {
+    id: 'data-table',
+    title: '数据表格',
+    description: '强大组件',
+    route: '/data-table',
+    active: false,
+    icon: 'table_view',
+    iconFilled: false,
+    color: '#000000',
+    bgColor: '#00FFFF'
+  },
+  {
+    id: 'form',
+    title: '表单组件',
+    description: '丰富输入',
+    route: '/form',
+    active: true,
+    icon: 'edit_note',
+    iconFilled: false,
+    color: '#FFFFFF',
+    bgColor: '#BF00FF'
+  },
+  {
+    id: 'chart',
+    title: '图表展示',
+    description: '可视化',
+    route: '/chart',
+    active: false,
+    icon: 'insights',
+    iconFilled: false,
+    color: '#000000',
+    bgColor: '#FF5F1F'
+  },
+  {
+    id: 'upload',
+    title: '文件上传',
+    description: '管理',
+    route: '/upload',
+    active: false,
+    icon: 'cloud_upload',
+    iconFilled: false,
+    color: '#000000',
+    bgColor: '#FFF01F'
+  },
+  {
+    id: 'modal',
+    title: '对话框',
+    description: '弹窗',
+    route: '/modal',
+    active: false,
+    icon: 'layers',
+    iconFilled: false,
+    color: '#000000',
+    bgColor: '#00CCCC'
+  },
+  {
+    id: 'tree',
+    title: '树形控件',
+    description: '层级',
+    route: '/tree',
+    active: true,
+    icon: 'account_tree',
+    iconFilled: false,
+    color: '#FFFFFF',
+    bgColor: '#FF3131'
+  },
+  {
+    id: 'tabs',
+    title: '标签页',
+    description: '步骤',
+    route: '/tabs',
+    active: false,
+    icon: 'tab',
+    iconFilled: false,
+    color: '#000000',
+    bgColor: '#CCFF00'
+  },
+  {
+    id: 'version-test',
+    title: '版本测试',
+    description: '更新检测',
+    route: '/version-test',
+    active: true,
+    icon: 'system_update_alt',
+    iconFilled: false,
+    color: '#000000',
+    bgColor: '#FF69B4'
+  },
+  {
+    id: 'food-delivery',
+    title: '外卖下单',
+    description: '美食配送',
+    route: '/food-delivery',
+    active: true,
+    icon: 'restaurant',
+    iconFilled: false,
+    color: '#000000',
+    bgColor: '#FF5F1F'
+  }
 ]
+
+// 搜索过滤逻辑
+const filteredModules = computed(() => {
+  if (!searchQuery.value.trim()) {
+    return modules
+  }
+
+  const query = searchQuery.value.toLowerCase().trim()
+
+  return modules.filter(module => {
+    // 搜索标题
+    const titleMatch = module.title.toLowerCase().includes(query)
+    // 搜索ID
+    const idMatch = module.id.toLowerCase().includes(query)
+    // 搜索关键词映射
+    const keywords = getSearchKeywords(module.id)
+    const keywordMatch = keywords.some(keyword => keyword.toLowerCase().includes(query))
+
+    return titleMatch || idMatch || keywordMatch
+  })
+})
+
+// 搜索关键词映射（帮助用户更容易找到功能）
+const getSearchKeywords = (moduleId) => {
+  const keywordMap = {
+    'virtual-list': ['列表', '虚拟', '滚动', '大数据', '性能', 'virtual', 'list', 'scroll'],
+    'message-demo': ['消息', '通知', '提示', '弹窗', 'message', 'notification', 'toast'],
+    'data-table': ['表格', '数据', 'table', 'data', 'grid'],
+    'form': ['表单', '输入', '提交', 'form', 'input', 'submit'],
+    'chart': ['图表', '可视化', '统计', 'chart', 'graph', 'visualization'],
+    'upload': ['上传', '文件', '导入', 'upload', 'file', 'import'],
+    'modal': ['对话框', '弹窗', 'modal', 'dialog'],
+    'tree': ['树', '层级', '目录', 'tree', 'hierarchy'],
+    'tabs': ['标签', '页签', '切换', 'tabs', 'switch'],
+    'version-test': ['版本', '更新', '测试', 'version', 'update', 'test']
+  }
+
+  return keywordMap[moduleId] || []
+}
+
+// 搜索处理
+const handleSearch = () => {
+  // 搜索逻辑由 computed 自动处理
+  console.log('搜索:', searchQuery.value, '找到结果:', filteredModules.value.length)
+}
+
+// 清空搜索
+const clearSearch = () => {
+  searchQuery.value = ''
+  console.log('清空搜索')
+}
 
 const handleNavigate = (module) => {
   if (module.active) {
@@ -703,6 +810,102 @@ const handleCheckUpdate = async () => {
   outline: none;
 }
 
+/* 清空搜索按钮 */
+.clear-search-btn {
+  background: none;
+  border: none;
+  padding: 4px;
+  margin-left: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.clear-search-btn:hover {
+  transform: scale(1.1);
+}
+
+.clear-search-btn .material-symbols-outlined {
+  font-size: 18px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+/* 搜索结果信息 */
+.search-results-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  margin-top: 12px;
+  background-color: #4ECDC4;
+  border: 2px solid #000000;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.results-text {
+  color: #000000;
+  text-transform: uppercase;
+}
+
+.results-text strong {
+  font-weight: 800;
+}
+
+.clear-text-btn {
+  background: none;
+  border: none;
+  color: #000000;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 4px 8px;
+}
+
+.clear-text-btn:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* 无搜索结果提示 */
+.no-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 20px;
+  text-align: center;
+  margin-top: 24px;
+  background-color: #FFF01F;
+  border: 3px solid #000000;
+}
+
+.no-results-icon {
+  font-size: 48px;
+  color: #000000;
+  margin-bottom: 16px;
+}
+
+.no-results-text {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: 18px;
+  color: #000000;
+  font-weight: 800;
+  margin: 0 0 8px 0;
+  text-transform: uppercase;
+}
+
+.no-results-hint {
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.7);
+  font-weight: 600;
+  margin: 0;
+}
+
 /* 九宫格区域 */
 .grid-section {
   padding: 0 20px;
@@ -771,57 +974,6 @@ const handleCheckUpdate = async () => {
 
 .card-icon .material-symbols-outlined {
   font-size: 28px;
-}
-
-/* 不同卡片的图标颜色 */
-.card:nth-child(1) .card-icon {
-  background-color: #FF00FF;
-  color: #000000;
-}
-
-.card:nth-child(2) .card-icon {
-  background-color: #39FF14;
-  color: #000000;
-}
-
-.card:nth-child(3) .card-icon {
-  background-color: #00FFFF;
-  color: #000000;
-}
-
-.card:nth-child(4) .card-icon {
-  background-color: #BF00FF;
-  color: #ffffff;
-}
-
-.card:nth-child(5) .card-icon {
-  background-color: #FF5F1F;
-  color: #000000;
-}
-
-.card:nth-child(6) .card-icon {
-  background-color: #FFF01F;
-  color: #000000;
-}
-
-.card:nth-child(7) .card-icon {
-  background-color: #00CCCC;
-  color: #000000;
-}
-
-.card:nth-child(8) .card-icon {
-  background-color: #FF3131;
-  color: #ffffff;
-}
-
-.card:nth-child(9) .card-icon {
-  background-color: #CCFF00;
-  color: #000000;
-}
-
-.card:nth-child(10) .card-icon {
-  background-color: #FF69B4;
-  color: #000000;
 }
 
 .card-title {
