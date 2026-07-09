@@ -1,21 +1,12 @@
 {
-  "version": "1.0.0",
-  "buildTime": "2026-07-09T01:10:16.497Z",
-  "buildDate": "2026/7/9 01:10:16",
-  "gitHash": "",
-  "gitBranch": "",
-  "environment": "development",
+  "version": "1.0.4",
+  "buildTime": "2026-07-09T01:34:22.645Z",
+  "buildDate": "2026/7/9 09:34:22",
+  "environment": "production",
   "changes": [
-    "🎉 首次发布",
-    "✨ Neo-Brutalism 设计风格",
-    "🚀 虚拟列表高性能组件",
-    "💬 消息通知组件",
-    "🔄 版本更新检测功能"
+    "✨ feat: 新增自动版本管理与全局消息组件",
+    "🔄 更新 Home.vue 与 test.html，移除 demo.html",
+    "📝 Initial commit: vue3-naiveui 项目初始化"
   ],
-  "force": false,
-  "customInfo": {
-    "releaseDate": "2026-07-09T01:10:16.497Z",
-    "author": "开发团队",
-    "description": "这是一个基于 Vue3 + NaiveUI 的 Neo-Brutalism 设计风格应用"
-  }
+  "force": false
 }
