@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自动化版本管理测试</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 8px;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 24px;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-list li {
+            padding: 12px;
+            margin: 8px 0;
+            background: #f8f9fa;
+            border-left: 4px solid #4ECDC4;
+            border-radius: 4px;
+        }
+        .feature-list strong {
+            color: #333;
+        }
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 20px 0;
+        }
+        .before, .after {
+            padding: 16px;
+            border-radius: 8px;
+        }
+        .before {
+            background: #ffebee;
+            border: 2px solid #ef5350;
+        }
+        .after {
+            background: #e8f5e9;
+            border: 2px solid #66bb6a;
+        }
+        .before h3, .after h3 {
+            margin-top: 0;
+        }
+        .code-example {
+            background: #f5f5f5;
+            padding: 12px;
+            border-radius: 4px;
+            margin: 8px 0;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #4ECDC4;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .btn:hover {
+            background: #3DB8B0;
+            transform: translateY(-2px);
+        }
+        .highlight {
+            background: #fff3cd;
+            padding: 16px;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+            margin: 16px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>🎉 自动化版本管理系统</h1>
+            <p class="subtitle">版本号和更新信息现在完全自动化管理！</p>
+
+            <div class="comparison">
+                <div class="before">
+                    <h3>❌ 之前（手动）</h3>
+                    <ul class="feature-list">
+                        <li>手动修改 package.json</li>
+                        <li>手动编写更新内容</li>
+                        <li>手动设置版本号</li>
+                        <li>容易忘记或出错</li>
+                    </ul>
+                </div>
+                <div class="after">
+                    <h3>✅ 现在（自动）</h3>
+                    <ul class="feature-list">
+                        <li><strong>版本号自动递增</strong></li>
+                        <li><strong>更新日志自动生成</strong></li>
+                        <li><strong>Git信息自动获取</strong></li>
+                        <li><strong>完全自动化，零错误</strong></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight">
+                <strong>🚀 你现在只需要：</strong>
+                <div class="code-example">
+                    1. 正常写代码<br>
+                    2. Git 提交代码<br>
+                    3. 运行 npm run build<br>
+                    4. 完成！
+                </div>
+            </div>
+
+            <h2>🔧 自动化功能</h2>
+            <ul class="feature-list">
+                <li><strong>📦 版本号自动递增</strong>：每次构建自动增加版本号</li>
+                <li><strong>📝 更新日志生成</strong>：从 Git 提交自动提取更新内容</li>
+                <li><strong>🤖 智能分类</strong>：自动识别功能、修复、优化等类型</li>
+                <li><strong>⚠️ 强制更新判断</strong>：检测关键词自动设置强制更新</li>
+            </ul>
+
+            <h2>📝 推荐的 Git 提交格式</h2>
+            <div class="code-example">
+                # 功能新增<br>
+                git commit -m "feat: 添加用户登录功能"<br>
+                <br>
+                # Bug修复<br>
+                git commit -m "fix: 修复页面加载问题"<br>
+                <br>
+                # 性能优化<br>
+                git commit -m "optimize: 优化图片加载"
+            </div>
+
+            <div style="text-align: center; margin-top: 24px;">
+                <a href="/version-test" class="btn">🧪 测试版本检测功能</a>
+                <a href="/" class="btn" style="margin-left: 12px;">🏠 返回首页</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 显示当前版本信息
+        fetch('/version.json')
+            .then(response => response.json())
+            .then(version => {
+                console.log('📦 当前版本:', version.version);
+                console.log('📝 更新内容:', version.changes);
+                console.log('🕐 构建时间:', version.buildDate);
+
+                if (version.git) {
+                    console.log('🔖 Git信息:', version.git);
+                }
+            })
+            .catch(error => {
+                console.log('版本信息:', error.message);
+            });
+    </script>
+</body>
+</html>

@@ -9,6 +9,10 @@
         <h1 class="header-title">功能模块</h1>
       </div>
       <div class="header-right">
+        <button class="update-check-btn" @click="handleCheckUpdate" :disabled="isCheckingUpdate">
+          <span class="btn-icon">🔄</span>
+          <span class="btn-text">检测更新</span>
+        </button>
         <div class="avatar-container">
           <img
             class="avatar-img"
@@ -22,8 +26,13 @@
     <main class="main-content">
       <!-- Hero / Header Section -->
       <section class="hero-section">
-        <h2 class="hero-title">模块库</h2>
-        <p class="hero-subtitle">选择一个功能模块开始体验 — 2024 EDITION</p>
+        <div class="hero-left">
+          <h2 class="hero-title">模块库</h2>
+          <p class="hero-subtitle">选择一个功能模块开始体验 — 2024 EDITION</p>
+        </div>
+        <div class="hero-right">
+          <span class="version-badge">{{ currentVersion }}</span>
+        </div>
       </section>
 
       <!-- Search Bar -->
@@ -53,76 +62,76 @@
             <p class="card-description">高性能数据</p>
           </div>
 
-          <!-- Card 2: Data Table -->
+          <!-- Card 2: Message Demo -->
           <div class="card neo-shadow" @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mouseleave="handleMouseLeave" @click="handleNavigate(modules[1])">
+            <div class="card-status">
+              <span class="status-badge status-available">可用</span>
+            </div>
+            <div class="card-icon icon-green">
+              <span class="material-symbols-outlined">notifications_active</span>
+            </div>
+            <h3 class="card-title">消息演示</h3>
+            <p class="card-description">Neo-Brutalism</p>
+          </div>
+
+          <!-- Card 3: Data Table -->
+          <div class="card neo-shadow" @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mouseleave="handleMouseLeave" @click="handleNavigate(modules[2])">
             <div class="card-status">
               <span class="status-badge status-dev">开发中</span>
             </div>
-            <div class="card-icon icon-green">
+            <div class="card-icon icon-cyan">
               <span class="material-symbols-outlined">table_view</span>
             </div>
             <h3 class="card-title">数据表格</h3>
             <p class="card-description">强大组件</p>
           </div>
 
-          <!-- Card 3: Form Components -->
-          <div class="card neo-shadow" @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mouseleave="handleMouseLeave" @click="handleNavigate(modules[2])">
+          <!-- Card 4: Form Components -->
+          <div class="card neo-shadow" @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mouseleave="handleMouseLeave" @click="handleNavigate(modules[3])">
             <div class="card-status">
               <span class="status-badge status-dev">开发中</span>
             </div>
-            <div class="card-icon icon-cyan">
+            <div class="card-icon icon-purple">
               <span class="material-symbols-outlined">edit_note</span>
             </div>
             <h3 class="card-title">表单组件</h3>
             <p class="card-description">丰富输入</p>
           </div>
 
-          <!-- Card 4: Charts -->
-          <div class="card neo-shadow" @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mouseleave="handleMouseLeave" @click="handleNavigate(modules[3])">
+          <!-- Card 5: Charts -->
+          <div class="card neo-shadow" @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mouseleave="handleMouseLeave" @click="handleNavigate(modules[4])">
             <div class="card-status">
               <span class="status-badge status-dev">开发中</span>
             </div>
-            <div class="card-icon icon-purple">
+            <div class="card-icon icon-orange">
               <span class="material-symbols-outlined">insights</span>
             </div>
             <h3 class="card-title">图表展示</h3>
             <p class="card-description">可视化</p>
           </div>
 
-          <!-- Card 5: File Upload -->
-          <div class="card neo-shadow" @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mouseleave="handleMouseLeave" @click="handleNavigate(modules[4])">
+          <!-- Card 6: File Upload -->
+          <div class="card neo-shadow" @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mouseleave="handleMouseLeave" @click="handleNavigate(modules[5])">
             <div class="card-status">
               <span class="status-badge status-dev">开发中</span>
             </div>
-            <div class="card-icon icon-orange">
+            <div class="card-icon icon-yellow">
               <span class="material-symbols-outlined">cloud_upload</span>
             </div>
             <h3 class="card-title">文件上传</h3>
             <p class="card-description">管理</p>
           </div>
 
-          <!-- Card 6: Dialogs -->
-          <div class="card neo-shadow" @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mouseleave="handleMouseLeave" @click="handleNavigate(modules[5])">
-            <div class="card-status">
-              <span class="status-badge status-dev">开发中</span>
-            </div>
-            <div class="card-icon icon-yellow">
-              <span class="material-symbols-outlined">layers</span>
-            </div>
-            <h3 class="card-title">对话框</h3>
-            <p class="card-description">弹窗</p>
-          </div>
-
-          <!-- Card 7: Notifications -->
+          <!-- Card 7: Dialogs -->
           <div class="card neo-shadow" @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mouseleave="handleMouseLeave" @click="handleNavigate(modules[6])">
             <div class="card-status">
               <span class="status-badge status-dev">开发中</span>
             </div>
             <div class="card-icon icon-teal">
-              <span class="material-symbols-outlined">notifications_active</span>
+              <span class="material-symbols-outlined">layers</span>
             </div>
-            <h3 class="card-title">消息通知</h3>
-            <p class="card-description">提示</p>
+            <h3 class="card-title">对话框</h3>
+            <p class="card-description">弹窗</p>
           </div>
 
           <!-- Card 8: Tree Control -->
@@ -147,6 +156,18 @@
             </div>
             <h3 class="card-title">标签页</h3>
             <p class="card-description">步骤</p>
+          </div>
+
+          <!-- Card 10: Version Test -->
+          <div class="card neo-shadow" @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mouseleave="handleMouseLeave" @click="handleNavigate(modules[2])">
+            <div class="card-status">
+              <span class="status-badge status-available">可用</span>
+            </div>
+            <div class="card-icon icon-pink">
+              <span class="material-symbols-outlined">system_update_alt</span>
+            </div>
+            <h3 class="card-title">版本测试</h3>
+            <p class="card-description">更新检测</p>
           </div>
         </div>
       </section>
@@ -192,15 +213,48 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { useMessage } from 'naive-ui'
+import neoMessage from '@/utils/message'
+import {
+  getLocalVersion,
+  fetchRemoteVersion,
+  checkForUpdates,
+  saveLocalVersion,
+  compareVersions
+} from '@/utils/version'
 
 const router = useRouter()
-const message = useMessage()
+const message = neoMessage
+
+// 版本信息
+const localVersionInfo = ref(null)
+const remoteVersionInfo = ref(null)
+const isCheckingUpdate = ref(false)
+
+// 计算属性
+const currentVersion = computed(() => {
+  return localVersionInfo.value?.version || '未知'
+})
+
+const buildTime = computed(() => {
+  if (!localVersionInfo.value?.buildTime) return '未知'
+  try {
+    const date = new Date(localVersionInfo.value.buildTime)
+    return date.toLocaleDateString('zh-CN')
+  } catch {
+    return '未知'
+  }
+})
+
+const environment = computed(() => {
+  return localVersionInfo.value?.environment || 'development'
+})
 
 const modules = [
   { id: 'virtual-list', title: '虚拟列表', route: '/virtual-list', active: true },
+  { id: 'message-demo', title: '消息演示', route: '/message-demo', active: true },
+  { id: 'version-test', title: '版本测试', route: '/version-test', active: true },
   { id: 'data-table', title: '数据表格', route: '/data-table', active: false },
   { id: 'form', title: '表单组件', route: '/form', active: false },
   { id: 'chart', title: '图表展示', route: '/chart', active: false },
@@ -236,6 +290,125 @@ const handleMouseLeave = (event) => {
   const card = event.currentTarget
   card.style.transform = 'translate(0px, 0px)'
   card.style.boxShadow = '4px 4px 0px 0px #000000'
+}
+
+// 页面加载时检查版本
+onMounted(async () => {
+  // 获取本地版本信息
+  localVersionInfo.value = getLocalVersion()
+
+  // 如果没有本地版本信息，先保存当前版本
+  if (!localVersionInfo.value) {
+    const baseUrl = window.location.origin
+    const remoteVersion = await fetchRemoteVersion(baseUrl)
+    if (remoteVersion) {
+      saveLocalVersion(remoteVersion)
+      localVersionInfo.value = remoteVersion
+    }
+  }
+
+  // 检查版本更新
+  await checkVersionUpdate()
+})
+
+// 检查版本更新
+const checkVersionUpdate = async () => {
+  if (isCheckingUpdate.value) return
+
+  try {
+    isCheckingUpdate.value = true
+    const baseUrl = window.location.origin
+
+    await checkForUpdates(
+      baseUrl,
+      // 没有更新
+      () => {
+        console.log('应用已是最新版本')
+      },
+      // 有更新（普通）
+      (local, remote) => {
+        console.log(`发现新版本: ${local.version} -> ${remote.version}`)
+        showUpdateNotification(local, remote, false)
+      },
+      // 强制更新
+      (remote) => {
+        console.log(`需要强制更新: ${remote.version}`)
+        const local = localVersionInfo.value || { version: '0.0.0' }
+        showUpdateNotification(local, remote, true)
+      }
+    )
+  } catch (error) {
+    console.error('版本检查失败:', error)
+  } finally {
+    isCheckingUpdate.value = false
+  }
+}
+
+// 显示更新通知
+const showUpdateNotification = (local, remote, isForce) => {
+  const changesText = remote.changes?.length > 0
+    ? remote.changes.slice(0, 3).join('、')
+    : '性能优化和问题修复'
+
+  if (isForce) {
+    // 强制更新：直接显示弹窗
+    if (window.showUpdateDialog) {
+      window.showUpdateDialog(local, remote, true)
+    }
+  } else {
+    // 普通更新：先显示消息提示，然后显示弹窗
+    message.success(`🆕 发现新版本 ${remote.version}：${changesText}`, {
+      duration: 3000,
+      onAfterLeave: () => {
+        // 消息消失后显示更新弹窗
+        if (window.showUpdateDialog) {
+          setTimeout(() => {
+            window.showUpdateDialog(local, remote, false)
+          }, 500)
+        }
+      }
+    })
+  }
+
+  // 保存远程版本信息供后续使用
+  remoteVersionInfo.value = remote
+}
+
+// 手动检查更新
+const handleCheckUpdate = async () => {
+  if (isCheckingUpdate.value) {
+    message.info('正在检查更新...')
+    return
+  }
+
+  try {
+    isCheckingUpdate.value = true
+    message.info('正在检查更新...')
+
+    const baseUrl = window.location.origin
+
+    await checkForUpdates(
+      baseUrl,
+      // 没有更新
+      () => {
+        message.success('✅ 应用已是最新版本！')
+      },
+      // 有更新
+      (local, remote) => {
+        showUpdateNotification(local, remote, false)
+      },
+      // 强制更新
+      (remote) => {
+        const local = localVersionInfo.value || { version: '0.0.0' }
+        showUpdateNotification(local, remote, true)
+      }
+    )
+  } catch (error) {
+    console.error('检查更新失败:', error)
+    message.error('检查更新失败，请稍后重试')
+  } finally {
+    isCheckingUpdate.value = false
+  }
 }
 </script>
 
@@ -349,6 +522,50 @@ const handleMouseLeave = (event) => {
 .header-right {
   display: flex;
   align-items: center;
+  gap: 12px;
+}
+
+.update-check-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #4ECDC4;
+  border: 3px solid #000000;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #000000;
+  box-shadow: 3px 3px 0px #000000;
+}
+
+.update-check-btn:hover {
+  background-color: #3DB8B0;
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0px #000000;
+}
+
+.update-check-btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0px #000000;
+}
+
+.update-check-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.update-check-btn .btn-icon {
+  font-size: 14px;
+  transition: transform 0.3s;
+}
+
+.update-check-btn:hover .btn-icon {
+  transform: rotate(180deg);
 }
 
 .avatar-container {
@@ -383,14 +600,23 @@ const handleMouseLeave = (event) => {
 .hero-section {
   padding: 24px 20px;
   display: flex;
-  flex-direction: column;
-  gap: 16px;
+  justify-content: space-between;
+  align-items: center;
   background-color: rgba(0, 229, 255, 0.2);
   border: 3px solid #000000;
   border-top: 0;
   border-left: 0;
   border-right: 0;
   margin-bottom: 24px;
+  gap: 16px;
+}
+
+.hero-left {
+  flex: 1;
+}
+
+.hero-right {
+  flex-shrink: 0;
 }
 
 .hero-title {
@@ -409,8 +635,22 @@ const handleMouseLeave = (event) => {
   font-size: 12px;
   color: #000000;
   font-weight: 700;
-  margin: 0;
+  margin: 4px 0 0 0;
   text-transform: uppercase;
+}
+
+/* 版本号徽章 */
+.version-badge {
+  display: inline-block;
+  background-color: #4ECDC4;
+  border: 3px solid #000000;
+  padding: 8px 16px;
+  font-family: 'Courier New', monospace;
+  font-size: 16px;
+  font-weight: 900;
+  color: #000000;
+  box-shadow: 3px 3px 0px #000000;
+  white-space: nowrap;
 }
 
 /* 搜索区域 */
@@ -576,6 +816,11 @@ const handleMouseLeave = (event) => {
   color: #000000;
 }
 
+.card:nth-child(10) .card-icon {
+  background-color: #FF69B4;
+  color: #000000;
+}
+
 .card-title {
   font-family: 'Manrope', sans-serif;
   font-size: 12px;
@@ -699,6 +944,13 @@ const handleMouseLeave = (event) => {
   height: 80px;
 }
 
+/* 版本信息区域 */
+.version-section {
+  padding: 0 20px;
+  margin-bottom: 24px;
+}
+
+
 .nav-item {
   flex: 1;
   display: flex;
@@ -763,6 +1015,39 @@ const handleMouseLeave = (event) => {
 
   .card-description {
     font-size: 8px;
+  }
+
+  /* 英雄区域小屏幕优化 */
+  .hero-section {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero-title {
+    font-size: 24px;
+  }
+
+  .hero-subtitle {
+    font-size: 11px;
+  }
+
+  .version-badge {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+
+  /* 顶部栏小屏幕优化 */
+  .update-check-btn {
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+
+  .update-check-btn .btn-text {
+    display: none;
+  }
+
+  .update-check-btn .btn-icon {
+    font-size: 16px;
   }
 }
 </style>

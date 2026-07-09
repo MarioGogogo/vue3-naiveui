@@ -1,14 +1,14 @@
 <template>
   <div class="virtual-list-container">
-    <!-- 紧凑的顶部栏 -->
-    <div class="compact-header">
-      <button class="back-button" @click="goBack">
+    <!-- Neo-Brutalism 顶部栏 -->
+    <div class="neo-header">
+      <button class="neo-back-btn" @click="goBack">
         <span class="back-icon">←</span>
         <span class="back-text">返回</span>
       </button>
       <div class="header-info">
-        <h1 class="title">虚拟列表示例</h1>
-        <p class="subtitle">10万条数据流畅滚动</p>
+        <h1 class="neo-title">虚拟列表</h1>
+        <p class="neo-subtitle">100,000 条数据</p>
       </div>
     </div>
 
@@ -16,7 +16,7 @@
     <div class="list-wrapper">
       <n-spin :show="loading">
         <n-virtual-list
-          :item-size="72"
+          :item-size="80"
           :items="data"
           :item-resizable="true"
           class="virtual-list"
@@ -25,25 +25,25 @@
           <template #default="{ item, index }">
             <div
               :key="item.id"
-              class="list-item"
-              :class="{ even: index % 2 === 0 }"
+              class="neo-list-item"
+              :style="{ '--accent-color': getAccentColor(index) }"
             >
-              <div class="item-avatar">
+              <div class="neo-avatar">
                 {{ item.name.charAt(0) }}
               </div>
               <div class="item-content">
-                <div class="item-name">{{ item.name }}</div>
-                <div class="item-email">{{ item.email }}</div>
-                <div class="item-description">{{ item.description }}</div>
+                <div class="neo-name">{{ item.name }}</div>
+                <div class="neo-email">{{ item.email }}</div>
+                <div class="neo-desc">{{ item.description }}</div>
               </div>
               <div class="item-actions">
                 <n-space size="small">
-                  <n-button size="tiny" @click.stop="handleView(item)">
+                  <button class="neo-btn neo-btn-view" @click.stop="handleView(item)">
                     查看
-                  </n-button>
-                  <n-button size="tiny" type="primary" @click.stop="handleEdit(item)">
+                  </button>
+                  <button class="neo-btn neo-btn-edit" @click.stop="handleEdit(item)">
                     编辑
-                  </n-button>
+                  </button>
                 </n-space>
               </div>
             </div>
@@ -52,15 +52,15 @@
       </n-spin>
     </div>
 
-    <!-- 底部统计 -->
-    <div class="stats-bar">
-      <div class="stat-item">
-        <span class="stat-label">总数据</span>
-        <span class="stat-value">{{ data.length.toLocaleString() }}</span>
+    <!-- Neo-Brutalism 底部统计 -->
+    <div class="neo-stats-bar">
+      <div class="neo-stat-box">
+        <span class="neo-stat-label">总数据</span>
+        <span class="neo-stat-value">{{ data.length.toLocaleString() }}</span>
       </div>
-      <div class="stat-item">
-        <span class="stat-label">已加载</span>
-        <span class="stat-value">{{ data.length.toLocaleString() }}</span>
+      <div class="neo-stat-box">
+        <span class="neo-stat-label">已加载</span>
+        <span class="neo-stat-value">{{ data.length.toLocaleString() }}</span>
       </div>
     </div>
   </div>
@@ -69,10 +69,10 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useMessage } from 'naive-ui'
+import neoMessage from '@/utils/message'
 
 const router = useRouter()
-const message = useMessage()
+const message = neoMessage
 const loading = ref(false)
 const data = ref([])
 
@@ -144,6 +144,24 @@ const goBack = () => {
   router.push('/')
 }
 
+// Neo-Brutalism 配色方案
+const accentColors = [
+  '#FF6B6B', // 红
+  '#4ECDC4', // 青
+  '#FFE66D', // 黄
+  '#95E1D3', // 薄荷
+  '#F38181', // 珊瑚
+  '#AA96DA', // 紫
+  '#FCBAD3', // 粉
+  '#A8E6CF', // 绿
+  '#FFB347', // 橙
+  '#77DD77', // 草绿
+]
+
+const getAccentColor = (index) => {
+  return accentColors[index % accentColors.length]
+}
+
 onMounted(() => {
   loadData()
 })
@@ -152,116 +170,129 @@ onMounted(() => {
 <style scoped>
 .virtual-list-container {
   min-height: 100vh;
-  background: #fbf8fc;
+  background: #FFFFF0;
   display: flex;
   flex-direction: column;
+  font-family: 'Space Grotesk', 'Arial Black', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-/* 紧凑的顶部栏 */
-.compact-header {
-  background: #fbf8fc;
-  padding: 12px 16px;
+/* Neo-Brutalism 顶部栏 */
+.neo-header {
+  background: #FF6B6B;
+  border: 4px solid #000;
+  padding: 16px;
   display: flex;
   align-items: center;
-  gap: 12px;
-  border-bottom: 1px solid #e4e1e6;
+  gap: 16px;
   position: sticky;
   top: 0;
   z-index: 10;
+  box-shadow: 6px 6px 0px #000;
 }
 
-.back-button {
+.neo-back-btn {
   display: flex;
   align-items: center;
-  gap: 4px;
-  background: none;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 8px;
+  gap: 8px;
+  background: #FFF;
+  border: 3px solid #000;
+  padding: 10px 16px;
   cursor: pointer;
-  transition: background 0.2s;
-  color: #00685f;
+  transition: all 0.1s;
+  color: #000;
+  font-weight: 700;
+  font-size: 14px;
+  box-shadow: 3px 3px 0px #000;
 }
 
-.back-button:active {
-  background: #e8f8ef;
-  transform: scale(0.95);
+.neo-back-btn:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px #000;
+}
+
+.neo-back-btn:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0px 0px 0px #000;
 }
 
 .back-icon {
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.back-text {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 20px;
+  font-weight: 900;
 }
 
 .header-info {
   flex: 1;
 }
 
-.title {
-  font-family: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 20px;
-  color: #1b1b1e;
+.neo-title {
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 1;
+  color: #000;
   margin: 0;
+  text-transform: uppercase;
+  letter-spacing: -1px;
 }
 
-.subtitle {
-  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 12px;
-  line-height: 16px;
-  color: #3d4947;
-  margin: 2px 0 0 0;
-  opacity: 0.7;
+.neo-subtitle {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #000;
+  margin: 6px 0 0 0;
+  opacity: 0.9;
 }
 
 /* 列表容器 */
 .list-wrapper {
   flex: 1;
-  background: white;
+  background: #FFFFF0;
   margin: 0;
-  padding: 0;
+  padding: 16px;
 }
 
 .virtual-list {
-  height: calc(100vh - 100px);
+  height: calc(100vh - 140px);
 }
 
-/* 列表项 */
-.list-item {
+/* Neo-Brutalism 列表项 */
+.neo-list-item {
   display: flex;
   align-items: center;
-  padding: 12px 16px;
-  border-bottom: 1px solid #f0f0f0;
-  gap: 12px;
-  transition: background 0.2s;
+  padding: 16px;
+  border: 3px solid #000;
+  margin-bottom: 12px;
+  gap: 16px;
+  background: #FFF;
+  box-shadow: 5px 5px 0px #000;
+  transition: all 0.1s;
+  cursor: pointer;
 }
 
-.list-item:active {
-  background: #f8f9fa;
+.neo-list-item:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0px #000;
 }
 
-.list-item.even {
-  background: #fafafa;
+.neo-list-item:active {
+  transform: translate(2px, 2px);
+  box-shadow: 3px 3px 0px #000;
 }
 
-.item-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+.neo-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 0;
+  background: var(--accent-color, #4ECDC4);
+  border: 3px solid #000;
+  color: #000;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 600;
-  font-size: 16px;
+  font-weight: 900;
+  font-size: 24px;
   flex-shrink: 0;
+  box-shadow: 3px 3px 0px #000;
 }
 
 .item-content {
@@ -269,22 +300,27 @@ onMounted(() => {
   min-width: 0;
 }
 
-.item-name {
-  font-weight: 600;
-  font-size: 14px;
-  color: #333;
-  margin-bottom: 2px;
+.neo-name {
+  font-weight: 900;
+  font-size: 18px;
+  color: #000;
+  margin-bottom: 4px;
+  line-height: 1.2;
 }
 
-.item-email {
+.neo-email {
   font-size: 12px;
-  color: #666;
-  margin-bottom: 2px;
+  font-weight: 700;
+  color: #000;
+  margin-bottom: 4px;
+  opacity: 0.6;
 }
 
-.item-description {
+.neo-desc {
   font-size: 11px;
-  color: #999;
+  font-weight: 600;
+  color: #000;
+  opacity: 0.5;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -294,74 +330,128 @@ onMounted(() => {
   flex-shrink: 0;
 }
 
-/* 底部统计栏 */
-.stats-bar {
-  background: #fbf8fc;
-  border-top: 1px solid #e4e1e6;
-  padding: 12px 16px;
+/* Neo-Brutalism 按钮 */
+.neo-btn {
+  padding: 8px 16px;
+  border: 3px solid #000;
+  font-weight: 800;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.1s;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 3px 3px 0px #000;
+}
+
+.neo-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0px #000;
+}
+
+.neo-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px #000;
+}
+
+.neo-btn-view {
+  background: #FFE66D;
+  color: #000;
+}
+
+.neo-btn-edit {
+  background: #4ECDC4;
+  color: #000;
+}
+
+/* Neo-Brutalism 底部统计栏 */
+.neo-stats-bar {
+  background: #FFE66D;
+  border-top: 4px solid #000;
+  padding: 16px;
   display: flex;
   justify-content: center;
-  gap: 32px;
+  gap: 24px;
   position: sticky;
   bottom: 0;
   z-index: 10;
+  box-shadow: 0 -6px 0px #000;
 }
 
-.stat-item {
+.neo-stat-box {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
+  gap: 4px;
+  padding: 12px 20px;
+  background: #FFF;
+  border: 3px solid #000;
+  box-shadow: 4px 4px 0px #000;
 }
 
-.stat-label {
-  font-size: 10px;
-  color: #3d4947;
+.neo-stat-label {
+  font-size: 11px;
+  color: #000;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   opacity: 0.7;
-  font-weight: 500;
 }
 
-.stat-value {
-  font-size: 14px;
-  color: #00685f;
-  font-weight: 600;
+.neo-stat-value {
+  font-size: 20px;
+  color: #000;
+  font-weight: 900;
+  line-height: 1;
 }
 
 /* 小屏幕优化 */
 @media (max-width: 360px) {
-  .compact-header {
-    padding: 10px 12px;
+  .neo-header {
+    padding: 12px;
   }
 
-  .title {
-    font-size: 14px;
+  .neo-title {
+    font-size: 20px;
   }
 
-  .subtitle {
+  .neo-subtitle {
+    font-size: 12px;
+  }
+
+  .neo-list-item {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .neo-avatar {
+    width: 44px;
+    height: 44px;
+    font-size: 20px;
+  }
+
+  .neo-name {
+    font-size: 16px;
+  }
+
+  .neo-email {
     font-size: 11px;
   }
 
-  .list-item {
-    padding: 10px 12px;
-    gap: 8px;
-  }
-
-  .item-avatar {
-    width: 36px;
-    height: 36px;
-    font-size: 14px;
-  }
-
-  .item-name {
-    font-size: 13px;
-  }
-
-  .item-email {
-    font-size: 11px;
-  }
-
-  .item-description {
+  .neo-desc {
     font-size: 10px;
+  }
+
+  .neo-btn {
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+
+  .neo-stat-box {
+    padding: 10px 16px;
+  }
+
+  .neo-stat-value {
+    font-size: 16px;
   }
 }
 </style>
