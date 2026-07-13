@@ -25,8 +25,8 @@
                 <!-- 骨架屏 -->
                 <div v-if="isLoading" class="sidebar-content">
                   <div v-for="i in 5" :key="i" class="category-item-skeleton">
-                    <n-skeleton height="40" width="40" :sharp="true" class="category-icon-skeleton" />
-                    <n-skeleton height="12" width="40" :sharp="true" />
+                    <n-skeleton height="24" width="24" :circle="true" class="category-icon-skeleton" />
+                    <n-skeleton height="12" width="40" :sharp="false" />
                   </div>
                 </div>
 
@@ -46,11 +46,13 @@
                 <!-- 骨架屏 -->
                 <div v-if="isLoading" class="product-content">
                   <div v-for="i in 3" :key="i" class="category-section-skeleton">
-                    <n-skeleton height="24" width="120" :sharp="true" class="category-title-skeleton" />
+                    <h3 class="category-title">
+                      <n-skeleton height="20" width="120" :sharp="true" style="display: inline-block; vertical-align: middle;" />
+                    </h3>
                     <div class="product-list-skeleton">
                       <div v-for="j in 3" :key="j" class="product-item-skeleton neo-shadow">
                         <!-- 商品图片占位 -->
-                        <n-skeleton height="60" width="60" :sharp="true" class="product-image-skeleton" />
+                        <n-skeleton height="60" width="60" :sharp="false" class="product-image-skeleton" />
 
                         <!-- 商品信息占位 -->
                         <div class="product-info-skeleton">
@@ -64,15 +66,7 @@
                             <n-skeleton height="16" width="40" :sharp="true" class="product-price-skeleton" />
                             <!-- 数量控制器占位 -->
                             <div class="quantity-controls-skeleton">
-                              <!-- 减号按钮占位 -->
-                              <div class="quantity-btn-wrapper">
-                                <n-skeleton height="28" width="28" :sharp="true" class="quantity-btn-skeleton" />
-                              </div>
-                              <!-- 数量显示占位 -->
-                              <div class="quantity-value-wrapper">
-                                <n-skeleton height="14" width="20" :sharp="true" class="quantity-value-skeleton" />
-                              </div>
-                              <!-- 加号按钮占位 -->
+                              <!-- 仅保留加号按钮占位 -->
                               <div class="quantity-btn-wrapper">
                                 <n-skeleton height="28" width="28" :sharp="true" class="quantity-btn-skeleton" />
                               </div>
@@ -100,16 +94,26 @@
                           <div class="product-footer">
                             <span class="product-price">¥{{ product.price }}</span>
                             <div class="quantity-controls">
-                              <button v-if="getCartQuantity(product.id) > 0" @click="decreaseQuantity(product)"
-                                class="quantity-btn quantity-btn-minus">
-                                <span class="material-symbols-outlined">remove</span>
-                              </button>
-                              <span v-if="getCartQuantity(product.id) > 0" class="quantity-value">
-                                {{ getCartQuantity(product.id) }}
-                              </span>
-                              <button @click="increaseQuantity(product)" class="quantity-btn quantity-btn-plus">
-                                <span class="material-symbols-outlined">add</span>
-                              </button>
+                              <div v-if="product.specs && product.specs.length > 0" class="spec-btn-wrapper">
+                                <button @click="openSpecModal(product)" class="spec-btn neo-btn neo-btn-primary">
+                                  选规格
+                                </button>
+                                <span v-if="getProductCartTotalCount(product.id) > 0" class="spec-badge">
+                                  {{ getProductCartTotalCount(product.id) }}
+                                </span>
+                              </div>
+                              <template v-else>
+                                <button v-if="getCartQuantity(product.id) > 0" @click="decreaseQuantity(product)"
+                                  class="quantity-btn quantity-btn-minus">
+                                  <span class="material-symbols-outlined">remove</span>
+                                </button>
+                                <span v-if="getCartQuantity(product.id) > 0" class="quantity-value">
+                                  {{ getCartQuantity(product.id) }}
+                                </span>
+                                <button @click="increaseQuantity(product)" class="quantity-btn quantity-btn-plus">
+                                  <span class="material-symbols-outlined">add</span>
+                                </button>
+                              </template>
                             </div>
                           </div>
                         </div>
@@ -330,9 +334,12 @@
           <button @click="showCart = false" class="neo-btn">去选购</button>
         </div>
         <div v-else class="cart-items">
-          <div v-for="item in cartItems" :key="item.id" class="cart-item neo-shadow">
+          <div v-for="item in cartItems" :key="item.id + '-' + (item.selectedSpec || '')" class="cart-item neo-shadow">
             <div class="cart-item-info">
-              <h4 class="cart-item-name">{{ item.name }}</h4>
+              <h4 class="cart-item-name">
+                {{ item.name }}
+                <span v-if="item.selectedSpec" class="cart-item-spec">({{ item.selectedSpec }})</span>
+              </h4>
               <p class="cart-item-price">¥{{ item.price }}</p>
             </div>
             <div class="cart-item-controls">
@@ -365,6 +372,50 @@
           </div>
           <button @click="handleCheckout" class="neo-btn neo-btn-primary checkout-btn-modal">
             确认下单
+          </button>
+        </div>
+      </template>
+    </n-modal>
+
+    <!-- 规格选择弹窗 -->
+    <n-modal v-model:show="showSpecModal" preset="card" class="neo-modal spec-modal" style="width: 360px;">
+      <template #header>
+        <div class="modal-header">
+          <span class="material-symbols-outlined">restaurant_menu</span>
+          <span>选择规格</span>
+        </div>
+      </template>
+      <div v-if="currentSpecProduct" class="spec-modal-content">
+        <div class="spec-product-info neo-shadow">
+          <div class="spec-product-emoji" :style="{ backgroundColor: currentSpecProduct.color }">
+            {{ currentSpecProduct.emoji }}
+          </div>
+          <div class="spec-product-details">
+            <h3 class="spec-product-name">{{ currentSpecProduct.name }}</h3>
+            <p class="spec-product-desc">{{ currentSpecProduct.description }}</p>
+          </div>
+        </div>
+        
+        <div class="spec-section">
+          <span class="spec-title">规格类别：</span>
+          <div class="spec-options">
+            <button v-for="(spec, index) in currentSpecProduct.specs" :key="index"
+              :class="['spec-option-btn', { active: selectedSpecIndex === index }]"
+              @click="selectSpec(index)">
+              {{ spec.name }}
+              <span v-if="spec.extraPrice > 0" class="spec-extra-price">+¥{{ spec.extraPrice }}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <template #action v-if="currentSpecProduct">
+        <div class="spec-modal-actions">
+          <div class="spec-modal-price">
+            <span class="price-label">总计:</span>
+            <span class="price-value">¥{{ currentSpecProduct.price + currentSpecProduct.specs[selectedSpecIndex].extraPrice }}</span>
+          </div>
+          <button @click="confirmSpecAddToCart" class="neo-btn neo-btn-primary spec-add-btn">
+            加入购物车
           </button>
         </div>
       </template>
@@ -420,7 +471,18 @@ const categories = ref([
     name: '热销推荐',
     icon: '🔥',
     products: [
-      { id: 101, name: '招牌牛肉面', description: '精选牛肉配秘制汤底', price: 28, emoji: '🍜', color: '#FFD700' },
+      {
+        id: 101,
+        name: '招牌牛肉面',
+        description: '精选牛肉配秘制汤底',
+        price: 28,
+        emoji: '🍜',
+        color: '#FFD700',
+        specs: [
+          { name: '标准份', extraPrice: 0 },
+          { name: '大份', extraPrice: 6 }
+        ]
+      },
       { id: 102, name: '香辣鸡腿堡', description: '鲜嫩多汁的鸡腿肉', price: 22, emoji: '🍔', color: '#FF6B6B' },
       { id: 103, name: '台湾卤肉饭', description: '传统台式风味', price: 25, emoji: '🍚', color: '#FFA07A' }
     ]
@@ -452,7 +514,19 @@ const categories = ref([
     products: [
       { id: 401, name: '番茄鸡蛋汤', description: '家常美味', price: 12, emoji: '🍅', color: '#FF6347' },
       { id: 402, name: '酸梅汤', description: '解腻消暑', price: 8, emoji: '🥤', color: '#E75480' },
-      { id: 403, name: '珍珠奶茶', description: '台式经典', price: 15, emoji: '🧋', color: '#FFB6C1' }
+      {
+        id: 403,
+        name: '珍珠奶茶',
+        description: '台式经典',
+        price: 15,
+        emoji: '🧋',
+        color: '#FFB6C1',
+        specs: [
+          { name: '中杯', extraPrice: 0 },
+          { name: '大杯', extraPrice: 3 },
+          { name: '超大杯', extraPrice: 5 }
+        ]
+      }
     ]
   },
   {
@@ -469,6 +543,11 @@ const categories = ref([
 
 // 加载状态
 const isLoading = ref(true)
+
+// 规格选择弹窗相关变量
+const showSpecModal = ref(false)
+const currentSpecProduct = ref(null)
+const selectedSpecIndex = ref(0)
 
 // 当前激活的Tab
 const activeTab = ref('menu')
@@ -548,36 +627,110 @@ const setCategoryRef = (id, el) => {
   }
 }
 
-// 获取购物车商品数量
+// 获取购物车商品数量（无规格商品直接加减用）
 const getCartQuantity = (productId) => {
-  const item = cart.value.find(c => c.id === productId)
+  const item = cart.value.find(c => c.id === productId && !c.selectedSpec)
   return item ? item.quantity : 0
 }
 
-// 增加商品数量
-const increaseQuantity = (product) => {
-  const existingItem = cart.value.find(c => c.id === product.id)
+// 获取某个商品在购物车中的全部数量总和（跨规格）
+const getProductCartTotalCount = (productId) => {
+  return cart.value
+    .filter(item => item.id === productId)
+    .reduce((total, item) => total + item.quantity, 0)
+}
+
+// 添加到购物车（支持规格）
+const addToCart = (product, spec) => {
+  const specName = spec ? spec.name : null
+  const finalPrice = spec ? (product.price + spec.extraPrice) : product.price
+  const existingItem = cart.value.find(c => c.id === product.id && c.selectedSpec === specName)
+  
   if (existingItem) {
     existingItem.quantity++
   } else {
     cart.value.push({
-      ...product,
+      id: product.id,
+      name: product.name,
+      description: product.description,
+      emoji: product.emoji,
+      color: product.color,
+      price: finalPrice,
+      basePrice: product.price,
+      selectedSpec: specName,
       quantity: 1
     })
   }
-  message.success(`已添加 ${product.name}`)
+  message.success(`已添加 ${product.name}${specName ? ' (' + specName + ')' : ''}`)
 }
 
-// 减少商品数量
+// 增加商品数量（兼容购物车项直接操作和无规格操作）
+const increaseQuantity = (product) => {
+  const specName = product.selectedSpec || null
+  const existingItem = cart.value.find(c => c.id === product.id && c.selectedSpec === specName)
+  if (existingItem) {
+    existingItem.quantity++
+  } else {
+    addToCart(product, null)
+  }
+}
+
+// 减少商品数量（兼容购物车项直接操作和无规格操作）
 const decreaseQuantity = (product) => {
-  const existingItem = cart.value.find(c => c.id === product.id)
+  const specName = product.selectedSpec || null
+  const existingItem = cart.value.find(c => c.id === product.id && c.selectedSpec === specName)
   if (existingItem) {
     if (existingItem.quantity > 1) {
       existingItem.quantity--
     } else {
-      cart.value = cart.value.filter(c => c.id !== product.id)
+      cart.value = cart.value.filter(c => !(c.id === product.id && c.selectedSpec === specName))
     }
   }
+}
+
+// 记录每个商品最后一次选择的规格索引，以便重新打开时能够自动恢复选中
+const lastSelectedSpecMap = ref({})
+
+// 规格选择弹窗相关方法
+const openSpecModal = (product) => {
+  currentSpecProduct.value = product
+  
+  // 1. 优先使用本次会话在弹窗中最后选择的规格索引
+  if (lastSelectedSpecMap.value[product.id] !== undefined) {
+    selectedSpecIndex.value = lastSelectedSpecMap.value[product.id]
+  } else {
+    // 2. 其次使用购物车中该商品最新加入的一项规格
+    const cartItemsForProduct = cart.value.filter(c => c.id === product.id)
+    if (cartItemsForProduct.length > 0) {
+      const lastCartItem = cartItemsForProduct[cartItemsForProduct.length - 1]
+      const specIndex = product.specs.findIndex(s => s.name === lastCartItem.selectedSpec)
+      if (specIndex !== -1) {
+        selectedSpecIndex.value = specIndex
+        lastSelectedSpecMap.value[product.id] = specIndex
+        showSpecModal.value = true
+        return
+      }
+    }
+    // 3. 否则默认选中第一个规格
+    selectedSpecIndex.value = 0
+  }
+  
+  showSpecModal.value = true
+}
+
+const selectSpec = (index) => {
+  selectedSpecIndex.value = index
+  if (currentSpecProduct.value) {
+    lastSelectedSpecMap.value[currentSpecProduct.value.id] = index
+  }
+}
+
+const confirmSpecAddToCart = () => {
+  if (!currentSpecProduct.value) return
+  const product = currentSpecProduct.value
+  const spec = product.specs[selectedSpecIndex.value]
+  addToCart(product, spec)
+  showSpecModal.value = false
 }
 
 // 选择分类
@@ -829,8 +982,11 @@ onMounted(() => {
   flex-direction: column;
   align-items: center;
   padding: 16px 8px;
-  gap: 8px;
-  border-bottom: 1px solid #e8e8e8;
+  border-left: 3px solid transparent;
+}
+
+.category-icon-skeleton {
+  margin-bottom: 4px;
 }
 
 .category-icon-skeleton :deep(.n-skeleton) {
@@ -896,7 +1052,7 @@ onMounted(() => {
 
 /* 骨架屏商品样式 */
 .category-section-skeleton {
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 }
 
 .category-title-skeleton :deep(.n-skeleton) {
@@ -916,7 +1072,7 @@ onMounted(() => {
   gap: 12px;
   padding: 12px;
   background-color: #ffffff;
-  border: 2px solid #e0e0e0;
+  border: 2px solid #000000;
 }
 
 /* 骨架屏动画效果 */
@@ -929,11 +1085,16 @@ onMounted(() => {
 }
 
 .product-image-skeleton {
+  width: 60px;
+  height: 60px;
   flex-shrink: 0;
-  border: 2px solid #e0e0e0;
+  border: 2px solid #000000;
+  border-radius: 8px;
 }
 
 .product-image-skeleton :deep(.n-skeleton) {
+  width: 60px !important;
+  height: 60px !important;
   margin: 0;
 }
 
@@ -944,18 +1105,26 @@ onMounted(() => {
 }
 
 .product-name-skeleton {
+  width: 120px;
+  height: 16px;
   margin-bottom: 4px;
 }
 
 .product-name-skeleton :deep(.n-skeleton) {
+  width: 120px !important;
+  height: 16px !important;
   margin: 0;
 }
 
 .product-desc-skeleton {
+  width: 100px;
+  height: 12px;
   margin-bottom: 8px;
 }
 
 .product-desc-skeleton :deep(.n-skeleton) {
+  width: 100px !important;
+  height: 12px !important;
   margin: 0;
 }
 
@@ -967,10 +1136,14 @@ onMounted(() => {
 }
 
 .product-price-skeleton {
+  width: 40px;
+  height: 16px;
   flex-shrink: 0;
 }
 
 .product-price-skeleton :deep(.n-skeleton) {
+  width: 40px !important;
+  height: 16px !important;
   margin: 0;
 }
 
@@ -993,15 +1166,18 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0 4px;
 }
 
 .quantity-btn-skeleton {
-  width: 100%;
-  height: 100%;
-  border: 2px solid #e0e0e0;
+  width: 28px;
+  height: 28px;
+  border: 2px solid #000000;
 }
 
 .quantity-btn-skeleton :deep(.n-skeleton) {
+  width: 28px !important;
+  height: 28px !important;
   margin: 0;
 }
 
@@ -1892,6 +2068,11 @@ onMounted(() => {
     height: 50px;
   }
 
+  .product-image-skeleton {
+    width: 50px;
+    height: 50px;
+  }
+
   .product-image-skeleton :deep(.n-skeleton) {
     height: 50px !important;
     width: 50px !important;
@@ -2029,5 +2210,178 @@ onMounted(() => {
   .feature-item {
     padding: 10px;
   }
+}
+
+/* 规格选择相关样式 */
+.spec-btn-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.spec-btn {
+  padding: 6px 14px;
+  font-size: 11px;
+}
+
+.spec-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: #FF3131;
+  color: #ffffff;
+  border: 2px solid #000000;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  font-family: 'Manrope', sans-serif;
+  box-shadow: 1px 1px 0px #000000;
+}
+
+.cart-item-spec {
+  font-size: 11px;
+  color: #FF5F1F;
+  font-weight: 700;
+  margin-left: 4px;
+}
+
+.spec-modal :deep(.n-card__content) {
+  padding: 20px;
+}
+
+.spec-modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.spec-product-info {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  background-color: #ffffff;
+  border: 2px solid #000000;
+}
+
+.spec-product-emoji {
+  width: 50px;
+  height: 50px;
+  border: 2px solid #000000;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.spec-product-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.spec-product-name {
+  font-family: 'Manrope', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  margin: 0 0 4px 0;
+  color: #000000;
+}
+
+.spec-product-desc {
+  font-family: 'Manrope', sans-serif;
+  font-size: 11px;
+  color: #666;
+  margin: 0;
+}
+
+.spec-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.spec-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: #000000;
+  font-family: 'Hanken Grotesk', sans-serif;
+  text-transform: uppercase;
+}
+
+.spec-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.spec-option-btn {
+  background-color: #ffffff;
+  border: 2px solid #000000;
+  padding: 8px 16px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: #000000;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 2px 2px 0px 0px #000000;
+}
+
+.spec-option-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px 0px #000000;
+}
+
+.spec-option-btn.active {
+  background-color: #4ECDC4;
+  transform: translate(0, 0);
+  box-shadow: 1px 1px 0px 0px #000000;
+}
+
+.spec-extra-price {
+  font-size: 10px;
+  color: #FF5F1F;
+  margin-left: 4px;
+}
+
+.spec-option-btn.active .spec-extra-price {
+  color: #000000;
+}
+
+.spec-modal-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.spec-modal-price {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.price-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+}
+
+.price-value {
+  font-size: 20px;
+  font-weight: 800;
+  color: #FF5F1F;
+}
+
+.spec-add-btn {
+  padding: 10px 20px;
+  font-size: 13px;
 }
 </style>
