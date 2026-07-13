@@ -224,7 +224,7 @@ const modules = [
     title: '数据表格',
     description: '强大组件',
     route: '/data-table',
-    active: false,
+    active: true,
     icon: 'table_view',
     iconFilled: false,
     color: '#000000',

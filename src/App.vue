@@ -1,17 +1,19 @@
 <template>
   <n-config-provider>
-    <n-message-provider>
-      <router-view />
-      <update-modal
-        :visible="showUpdateModal"
-        :local-version="localVersion"
-        :remote-version="remoteVersion"
-        :changes="versionChanges"
-        :is-force-update="isForceUpdate"
-        @update="handleUpdate"
-        @cancel="handleCancelUpdate"
-      />
-    </n-message-provider>
+    <n-dialog-provider>
+      <n-message-provider>
+        <router-view />
+        <update-modal
+          :visible="showUpdateModal"
+          :local-version="localVersion"
+          :remote-version="remoteVersion"
+          :changes="versionChanges"
+          :is-force-update="isForceUpdate"
+          @update="handleUpdate"
+          @cancel="handleCancelUpdate"
+        />
+      </n-message-provider>
+    </n-dialog-provider>
   </n-config-provider>
 </template>
 

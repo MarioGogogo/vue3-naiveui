@@ -8,6 +8,7 @@ import ComingSoon from '../views/ComingSoon.vue'
 import TreeView from '../views/TreeView.vue'
 import FormView from '../views/FormView.vue'
 import FoodDelivery from '../views/FoodDelivery.vue'
+import DataTable from '../views/DataTable.vue'
 
 const routes = [
   {
@@ -54,6 +55,11 @@ const routes = [
     path: '/food-delivery',
     name: 'FoodDelivery',
     component: FoodDelivery
+  },
+  {
+    path: '/data-table',
+    name: 'DataTable',
+    component: DataTable
   }
 ]
 
