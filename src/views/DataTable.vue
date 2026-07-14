@@ -106,26 +106,26 @@
               />
             </div>
 
-            <div class="table-cell cell-order">
+            <div class="table-cell cell-order" style="width: 120px">
               <div class="order-number">{{ item.orderNumber }}</div>
             </div>
 
-            <div class="table-cell cell-customer">
+            <div class="table-cell cell-customer" style="width: 180px">
               <div class="customer-info">
                 <div class="customer-name">{{ item.customerName }}</div>
                 <div class="customer-email">{{ item.customerEmail }}</div>
               </div>
             </div>
 
-            <div class="table-cell cell-amount">
+            <div class="table-cell cell-amount" style="width: 100px">
               <div class="amount-display">¥{{ item.amount.toFixed(2) }}</div>
             </div>
 
-            <div class="table-cell cell-date">
+            <div class="table-cell cell-date" style="width: 140px">
               <div class="date-display">{{ formatDate(item.createdAt) }}</div>
             </div>
 
-            <div class="table-cell cell-status">
+            <div class="table-cell cell-status" style="width: 90px">
               <span class="status-badge" :class="`status-${item.status}`">
                 {{ getStatusText(item.status) }}
               </span>
@@ -290,6 +290,29 @@
         </div>
       </template>
     </n-modal>
+
+    <!-- Neo-Brutalism 确认弹窗 -->
+    <div v-if="showConfirmModal" class="confirm-overlay" @click.self="showConfirmModal = false">
+      <div class="confirm-modal">
+        <div class="confirm-header">
+          <span class="material-symbols-outlined confirm-icon">warning</span>
+          <span class="confirm-title">{{ confirmConfig.title }}</span>
+        </div>
+        <div class="confirm-content">
+          {{ confirmConfig.content }}
+        </div>
+        <div class="confirm-actions">
+          <button class="neo-btn-confirm btn-cancel" @click="showConfirmModal = false">
+            <span class="material-symbols-outlined">close</span>
+            取消
+          </button>
+          <button class="neo-btn-confirm btn-danger" @click="handleConfirm">
+            <span class="material-symbols-outlined">delete</span>
+            确认删除
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -318,8 +341,14 @@ const pageSize = ref(10)
 // 模态框状态
 const showEditModal = ref(false)
 const showViewModal = ref(false)
+const showConfirmModal = ref(false)
 const editingItem = ref({})
 const viewingItem = ref({})
+const confirmConfig = ref({
+  title: '',
+  content: '',
+  onConfirm: null
+})
 
 // 表格列配置
 const columns = [
@@ -509,37 +538,47 @@ const saveEdit = () => {
   }
 }
 
+// 显示确认弹窗
+const showConfirm = (title, content, onConfirm) => {
+  confirmConfig.value = { title, content, onConfirm }
+  showConfirmModal.value = true
+}
+
+// 确认操作
+const handleConfirm = () => {
+  if (confirmConfig.value.onConfirm) {
+    confirmConfig.value.onConfirm()
+  }
+  showConfirmModal.value = false
+}
+
 // 删除
 const handleDelete = (item) => {
-  dialog.warning({
-    title: '确认删除',
-    content: `确定要删除订单 ${item.orderNumber} 吗？`,
-    positiveText: '删除',
-    negativeText: '取消',
-    onPositiveClick: () => {
+  showConfirm(
+    '确认删除',
+    `确定要删除订单 ${item.orderNumber} 吗？此操作不可恢复。`,
+    () => {
       const index = data.value.findIndex(i => i.id === item.id)
       if (index !== -1) {
         data.value.splice(index, 1)
         message.success('删除成功')
       }
     }
-  })
+  )
 }
 
 // 批量删除
 const handleBulkDelete = () => {
-  dialog.warning({
-    title: '批量删除',
-    content: `确定要删除选中的 ${selectedRows.value.length} 条记录吗？`,
-    positiveText: '删除',
-    negativeText: '取消',
-    onPositiveClick: () => {
+  showConfirm(
+    '批量删除',
+    `确定要删除选中的 ${selectedRows.value.length} 条记录吗？此操作不可恢复。`,
+    () => {
       data.value = data.value.filter(item => !selectedRows.value.includes(item.id))
       selectedRows.value = []
       selectAll.value = false
       message.success('批量删除成功')
     }
-  })
+  )
 }
 
 // 批量导出
@@ -1190,6 +1229,118 @@ onMounted(() => {
 
 .btn-primary {
   background: #4ECDC4;
+}
+
+/* Neo-Brutalism 确认弹窗 */
+.confirm-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.confirm-modal {
+  background: #FFF;
+  border: 4px solid #000;
+  box-shadow: 8px 8px 0px #000;
+  max-width: 420px;
+  width: 100%;
+  animation: slideIn 0.2s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.confirm-header {
+  background: #F38181;
+  border-bottom: 4px solid #000;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.confirm-icon {
+  font-size: 32px;
+  color: #000;
+}
+
+.confirm-title {
+  font-size: 20px;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: #000;
+  letter-spacing: -0.5px;
+}
+
+.confirm-content {
+  padding: 24px 16px;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.6;
+  color: #000;
+  text-align: center;
+}
+
+.confirm-actions {
+  padding: 16px;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  border-top: 4px solid #000;
+}
+
+.neo-btn-confirm {
+  padding: 12px 20px;
+  border: 3px solid #000;
+  font-size: 13px;
+  font-weight: 900;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-transform: uppercase;
+  box-shadow: 3px 3px 0px #000;
+  transition: all 0.1s;
+  min-width: 120px;
+  justify-content: center;
+}
+
+.neo-btn-confirm:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0px #000;
+}
+
+.neo-btn-confirm:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px #000;
+}
+
+.neo-btn-confirm .material-symbols-outlined {
+  font-size: 18px;
+}
+
+.neo-btn-confirm.btn-cancel {
+  background: #FFF;
+}
+
+.neo-btn-confirm.btn-danger {
+  background: #F38181;
 }
 
 /* 小屏幕优化 */
