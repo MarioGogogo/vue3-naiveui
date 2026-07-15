@@ -1412,6 +1412,13 @@ onMounted(() => {
   box-shadow: 6px 6px 0px 0px #000000;
 }
 
+/* 移动端限制弹窗宽度，保留左右边距 */
+.cart-modal {
+  width: calc(100vw - 32px) !important;
+  max-width: 400px;
+  margin: 0 16px;
+}
+
 .cart-modal :deep(.n-card__content) {
   padding: 20px;
 }

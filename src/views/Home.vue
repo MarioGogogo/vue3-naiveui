@@ -136,19 +136,19 @@
     <nav class="bottom-nav">
       <a class="nav-item" href="#" @click.prevent>
         <span class="material-symbols-outlined nav-icon">home</span>
-        <span class="nav-label">Home</span>
+        <span class="nav-label">首页</span>
       </a>
       <a class="nav-item nav-active" href="#" @click.prevent>
         <span class="material-symbols-outlined nav-icon material-filled">grid_view</span>
-        <span class="nav-label">Modules</span>
+        <span class="nav-label">模块</span>
       </a>
-      <a class="nav-item" href="#" @click.prevent>
-        <span class="material-symbols-outlined nav-icon">search</span>
-        <span class="nav-label">Search</span>
+      <a class="nav-item" href="#" @click.prevent="router.push('/message-center')">
+        <span class="material-symbols-outlined nav-icon">mail</span>
+        <span class="nav-label">消息</span>
       </a>
-      <a class="nav-item" href="#" @click.prevent>
+      <a class="nav-item" href="#" @click.prevent="router.push('/settings')">
         <span class="material-symbols-outlined nav-icon">settings</span>
-        <span class="nav-label">Settings</span>
+        <span class="nav-label">设置</span>
       </a>
     </nav>
   </body>
@@ -317,6 +317,28 @@ const modules = [
     iconFilled: false,
     color: '#000000',
     bgColor: '#FF5F1F'
+  },
+  {
+    id: 'dashboard',
+    title: '数据看板',
+    description: '统计图表',
+    route: '/dashboard',
+    active: true,
+    icon: 'analytics',
+    iconFilled: false,
+    color: '#000000',
+    bgColor: '#00E5FF'
+  },
+  {
+    id: 'profile',
+    title: '个人中心',
+    description: '用户资料',
+    route: '/profile',
+    active: true,
+    icon: 'person',
+    iconFilled: false,
+    color: '#000000',
+    bgColor: '#FF00CC'
   }
 ]
 
@@ -353,7 +375,10 @@ const getSearchKeywords = (moduleId) => {
     'modal': ['对话框', '弹窗', 'modal', 'dialog'],
     'tree': ['树', '层级', '目录', 'tree', 'hierarchy'],
     'tabs': ['标签', '页签', '切换', 'tabs', 'switch'],
-    'version-test': ['版本', '更新', '测试', 'version', 'update', 'test']
+    'version-test': ['版本', '更新', '测试', 'version', 'update', 'test'],
+    'food-delivery': ['外卖', '配送', '美食', 'food', 'delivery', 'restaurant'],
+    'dashboard': ['看板', '数据', '统计', '图表', 'dashboard', 'analytics', 'stats'],
+    'profile': ['个人', '用户', '资料', 'profile', 'user', 'account']
   }
 
   return keywordMap[moduleId] || []

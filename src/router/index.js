@@ -9,6 +9,10 @@ import TreeView from '../views/TreeView.vue'
 import FormView from '../views/FormView.vue'
 import FoodDelivery from '../views/FoodDelivery.vue'
 import DataTable from '../views/DataTable.vue'
+import Dashboard from '../views/Dashboard.vue'
+import MessageCenter from '../views/MessageCenter.vue'
+import Profile from '../views/Profile.vue'
+import Settings from '../views/Settings.vue'
 
 const routes = [
   {
@@ -60,6 +64,26 @@ const routes = [
     path: '/data-table',
     name: 'DataTable',
     component: DataTable
+  },
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: Dashboard
+  },
+  {
+    path: '/message-center',
+    name: 'MessageCenter',
+    component: MessageCenter
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: Profile
+  },
+  {
+    path: '/settings',
+    name: 'Settings',
+    component: Settings
   }
 ]
 
